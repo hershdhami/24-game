@@ -8,13 +8,7 @@ import Homescreen from './screens/Homescreen';
 
 const Stack = createNativeStackNavigator();
 
-function Welcome(props) {
-  return <Text>Welcome to hogwarts, {props.name}</Text>;
-}
-
 export default function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <NavigationContainer>
        <TailwindProvider>
