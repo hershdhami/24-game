@@ -2,6 +2,7 @@ import { View, Text, SafeAreaView, Image } from 'react-native'
 import React, { useLayoutEffect } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { ChevronDownIcon, UserIcon, MagnifyingGlassIcon, PlayIcon } from 'react-native-heroicons/outline'
+import './additionalcss.css';
 
 const Homescreen = () => {
   const navigation = useNavigation();
