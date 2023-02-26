@@ -55,7 +55,6 @@ const Homescreen = () => {
       </View>
       <View style={Styles.first}> 
         <Text style={Styles.textCss}> 24-Game </Text>
-        <Text style={Styles.textCss}> By: Hersh Dhami </Text>
       </View>
       
       <GameButton viewStyle={Styles.second} textStyle={Styles.textCss} buttonText={'' + Math.floor(Math.random() * 11)} />
@@ -94,7 +93,7 @@ const Styles = StyleSheet.create({
     backgroundColor: "#EDEBE7",
   },
   first: {
-    height: "16%",
+    height: "9%",
     width: "95%",
     backgroundColor: "#E6B8AF",
     justifyContent: "space-evenly",
@@ -115,13 +114,13 @@ const Styles = StyleSheet.create({
     justifyContent: "space-evenly",
   },
   third: {
-    height: "47%",
+    height: "52%",
     width: "75%",
     backgroundColor: "#E6D4AF",
     borderRadius: 25,
   },
   fourth: {
-    height: "47%",
+    height: "52%",
     width: "20%",
     backgroundColor: "#EDEBE7",
   },
