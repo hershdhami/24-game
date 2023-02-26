@@ -36,11 +36,42 @@ const Homescreen = () => {
 
   return (
     <SafeAreaView className='bg-white pt-5'>
-      <Text className='text-red-500'>
+      {/* <Text className='text-red-500'> */}
         {/* Header */}
 
-        <View className='flex-row pl-1 pt-1 pb-3 items-center mx-4 space-x-1.5'>
-          <Image 
+        <View className='pl-1 pt-4 pb-3 items-center mx-4 space-x-1.5'>
+          <Text className='text-center font-bold'>
+            24-Game
+          </Text>
+        </View>
+
+        <View className='bg-black pt-4 pb-4 grid grid-cols-2 gap-2 grid-rows-2'>
+          <Text>
+            <View>
+              <Text className='text-white text-center'> Section #1 </Text>
+            </View>
+            <View>
+              <Text className='text-white text-center'> Section #2 </Text>
+            </View>
+            <View>
+              <Text className='text-white text-center'> Section #3 </Text>
+            </View>
+            <View>
+              <Text className='text-white text-center'> Section #4 </Text>
+            </View>
+          </Text>
+        </View>
+
+      {/* </Text> */}
+    </SafeAreaView>
+  )
+}
+
+export default Homescreen
+
+
+/*
+<Image 
             source={{
               url: 'https://links.papareact.com/wru'
             }}
@@ -50,21 +81,14 @@ const Homescreen = () => {
             className='h-8 w-8 bg-gray-200 p-4 rounded=full'
           />
 
-          {/*This means that this view will take up most of the room*/}
+          {/*This means that this view will take up most of the room*//*}
+/*
           <View className='flex-1'>
               <Text className='font-bold text-gray-400 text-xs pt-1'>Deliver Now!</Text>
               <Text className='font-bold text-xl'>Current Location
-                <ChevronDownIcon size={20} colors="#00CCBB" />
+              <ChevronDownIcon size={20} colors="#00CCBB" />
               </Text>
           </View>
-
-        </View>
-
-        <UserIcon size={35} color="#00CCBB" />
-
-      </Text>
-    </SafeAreaView>
-  )
-}
-
-export default Homescreen
+          
+          <UserIcon size={35} color="#00CCBB" />
+*/
