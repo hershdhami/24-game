@@ -1,11 +1,14 @@
-import { View, Text, SafeAreaView, Image } from 'react-native'
-import React, { useLayoutEffect } from 'react'
+import { View, Text, SafeAreaView, Button, Pressable, StyleSheet } from 'react-native'
+import React, { useLayoutEffect, useState, useEffect } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { ChevronDownIcon, UserIcon, MagnifyingGlassIcon, PlayIcon } from 'react-native-heroicons/outline'
-import './additionalcss.css';
+import { Col, Row, Grid } from "react-native-easy-grid";
+import GameButton from './GameButton'
+import OperandButton from './OperandButton'
 
 const Homescreen = () => {
   const navigation = useNavigation();
+  const [dataSource, setDataSource] = useState([]);
 
   //One way to say Hello is equal to a function
   hello = function() {
@@ -17,7 +20,6 @@ const Homescreen = () => {
   hello = () => {
     console.log("Hello world");
   }
-
 
   //First parameter is the setup function
     //This will run before component is added to DOM, react will run setup function
@@ -33,43 +35,118 @@ const Homescreen = () => {
 
   }, []) //As soon as the screen appears "do something"
 
-  
+  useEffect(() => {
+    let items = Array.apply(null, Array(8)).map((v, i) => {
+      return {
+        id: i,
+        src: Math.floor(Math.random() * 11)
+      };
+    });
+    setDataSource(items);
+  }, []);
+
 
   return (
-    <SafeAreaView className='bg-white pt-5'>
+    <SafeAreaView style={Styles.container}>
       {/* <Text className='text-red-500'> */}
         {/* Header */}
+      <View style={Styles.safeAreaHeader}>
 
-        <View className='pl-1 pt-4 pb-3 items-center mx-4 space-x-1.5'>
-          <Text className='text-center font-bold'>
-            24-Game
-          </Text>
-        </View>
-
-        <View className='bg-black pt-4 pb-4 grid grid-cols-2 gap-2 grid-rows-2'>
-          <Text>
-            <View>
-              <Text className='text-white text-center'> Section #1 </Text>
-            </View>
-            <View>
-              <Text className='text-white text-center'> Section #2 </Text>
-            </View>
-            <View>
-              <Text className='text-white text-center'> Section #3 </Text>
-            </View>
-            <View>
-              <Text className='text-white text-center'> Section #4 </Text>
-            </View>
-          </Text>
-        </View>
+      </View>
+      <View style={Styles.first}> 
+        <Text style={Styles.textCss}> 24-Game </Text>
+        <Text style={Styles.textCss}> By: Hersh Dhami </Text>
+      </View>
+      
+      <GameButton viewStyle={Styles.second} textStyle={Styles.textCss} buttonText={'' + Math.floor(Math.random() * 11)} />
+      <GameButton viewStyle={Styles.second} textStyle={Styles.textCss} buttonText={'' + Math.floor(Math.random() * 11)} />
+      <GameButton viewStyle={Styles.second} textStyle={Styles.textCss} buttonText={'' + Math.floor(Math.random() * 11)} />
+      <GameButton viewStyle={Styles.second} textStyle={Styles.textCss} buttonText={'' + Math.floor(Math.random() * 11)} />
+      <GameButton viewStyle={Styles.second_bossmode} textStyle={Styles.textCss} buttonText="+" />
+      <GameButton viewStyle={Styles.second_bossmode} textStyle={Styles.textCss} buttonText="-" />
+      <GameButton viewStyle={Styles.second_bossmode} textStyle={Styles.textCss} buttonText="X" />
+      <GameButton viewStyle={Styles.second_bossmode} textStyle={Styles.textCss} buttonText="/" />
+      <View style={Styles.third}> 
+      </View>
+      <View style={Styles.fourth}> 
+      </View>
+       
+        
 
       {/* </Text> */}
     </SafeAreaView>
   )
 }
 
+const Styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignContent: "space-around",
+    justifyContent: "space-evenly",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    backgroundColor: "#EDEBE7"
+  },
+  safeAreaHeader: {
+    height: "4.5%",
+    width: "95%",
+    backgroundColor: "#EDEBE7",
+  },
+  first: {
+    height: "16%",
+    width: "95%",
+    backgroundColor: "#E6B8AF",
+    justifyContent: "space-evenly",
+    borderRadius: 25,
+  },
+  second: {
+    height: "14%",
+    width: "22.5%",
+    backgroundColor: "#718FBB",
+    borderRadius: 25,
+    justifyContent: "space-evenly",
+  },
+  second_bossmode: {
+    height: "8%",
+    width: "22.5%",
+    backgroundColor: "#718FBB",
+    borderRadius: 25,
+    justifyContent: "space-evenly",
+  },
+  third: {
+    height: "47%",
+    width: "75%",
+    backgroundColor: "#E6D4AF",
+    borderRadius: 25,
+  },
+  fourth: {
+    height: "47%",
+    width: "20%",
+    backgroundColor: "#EDEBE7",
+  },
+  textCss: {
+    fontSize: 25,
+    color: "white",
+    textAlign: "center"
+  }
+});
 export default Homescreen
 
+
+/*
+<View className='pl-1 pt-4 pb-8 items-center mx-4 space-x-1.5'>
+          <Text className='text-center font-bold'>
+            24-Game
+          </Text>
+        </View>
+
+        <View style={Styles.second}> 
+        <Pressable>
+          <Text style={Styles.textCss}> 4 </Text>
+        </Pressable>
+      </View>
+*/
 
 /*
 <Image 
@@ -92,4 +169,26 @@ export default Homescreen
           </View>
           
           <UserIcon size={35} color="#00CCBB" />
+
+          <DigitButton digit={Math.floor(Math.random() * 11)} />
+            <DigitButton digit={Math.floor(Math.random() * 11)} />
+            <DigitButton digit={Math.floor(Math.random() * 11)} />
+            <DigitButton digit={Math.floor(Math.random() * 11)} />
+            <OperandButton operation={"+"} />
+            <OperandButton operation={"-"} />
+            <OperandButton operation={"x"} />
+            <OperandButton operation={"/"} />
+*/
+
+/*
+
+<FlatList className='text-xl'
+            data={dataSource}
+            renderItem={({item}) => (
+              <DigitButton className='text-xl' digit={item.src} />
+            )}
+            numColumns={4}
+            keyExtractor={(item, index) => index}
+          />
+
 */
