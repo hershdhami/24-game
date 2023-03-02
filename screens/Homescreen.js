@@ -6,9 +6,30 @@ import { Col, Row, Grid } from "react-native-easy-grid";
 import GameButton from './GameButton'
 import OperandButton from './OperandButton'
 
+export const ACTIONABLE_ITEMS = {
+  ADD_DIGIT: "add-digit",
+  SUBTRACT_DIGIT: "subtract-digit",
+  MULTIPLY_DIGIT: "multiply-digit",
+  DIVIDE_DIGIT: "divide-digit"
+}
+
+var operationSelected = false;
+
+function reducer(state, {type, payload}) {
+  if (type == ACTIONABLE_ITEMS.ADD_DIGIT) {
+      //Perform the ADD_DIGIT BS
+      var elem = document.getElementById({payload})
+      elem.style.backgroundColor("#718FBB")
+
+      return {
+        ...state,
+        selectedButton: payload
+      };
+  }
+}
+
 const Homescreen = () => {
   const navigation = useNavigation();
-  const [dataSource, setDataSource] = useState([]);
 
   //One way to say Hello is equal to a function
   hello = function() {
@@ -35,16 +56,7 @@ const Homescreen = () => {
 
   }, []) //As soon as the screen appears "do something"
 
-  useEffect(() => {
-    let items = Array.apply(null, Array(8)).map((v, i) => {
-      return {
-        id: i,
-        src: Math.floor(Math.random() * 11)
-      };
-    });
-    setDataSource(items);
-  }, []);
-
+  const [{currentOperand, previousOperand, operation, selectedButton}, dispatch] = useReducer(reducer, {})
 
   return (
     <SafeAreaView style={Styles.container}>
@@ -57,14 +69,14 @@ const Homescreen = () => {
         <Text style={Styles.textCss}> 24-Game </Text>
       </View>
       
-      <GameButton viewStyle={Styles.second} textStyle={Styles.textCss} buttonText={'' + Math.floor(Math.random() * 11)} />
-      <GameButton viewStyle={Styles.second} textStyle={Styles.textCss} buttonText={'' + Math.floor(Math.random() * 11)} />
-      <GameButton viewStyle={Styles.second} textStyle={Styles.textCss} buttonText={'' + Math.floor(Math.random() * 11)} />
-      <GameButton viewStyle={Styles.second} textStyle={Styles.textCss} buttonText={'' + Math.floor(Math.random() * 11)} />
-      <GameButton viewStyle={Styles.second_bossmode} textStyle={Styles.textCss} buttonText="+" />
-      <GameButton viewStyle={Styles.second_bossmode} textStyle={Styles.textCss} buttonText="-" />
-      <GameButton viewStyle={Styles.second_bossmode} textStyle={Styles.textCss} buttonText="X" />
-      <GameButton viewStyle={Styles.second_bossmode} textStyle={Styles.textCss} buttonText="/" />
+      <GameButton dispatch={dispatch} viewStyle={Styles.second} textStyle={Styles.textCss} buttonText={'' + Math.floor(Math.random() * 11)} />
+      <GameButton dispatch={dispatch} viewStyle={Styles.second} textStyle={Styles.textCss} buttonText={'' + Math.floor(Math.random() * 11)} />
+      <GameButton dispatch={dispatch} viewStyle={Styles.second} textStyle={Styles.textCss} buttonText={'' + Math.floor(Math.random() * 11)} />
+      <GameButton dispatch={dispatch} viewStyle={Styles.second} textStyle={Styles.textCss} buttonText={'' + Math.floor(Math.random() * 11)} />
+      <OperandButton id={ADD_DIGIT} viewStyle={Styles.second_bossmode} textStyle={Styles.textCss} buttonText="+" />
+      <OperandButton id={SUBTRACT_DIGIT} viewStyle={Styles.second_bossmode} textStyle={Styles.textCss} buttonText="-" />
+      <OperandButton id={MULTIPLY_DIGIT} viewStyle={Styles.second_bossmode} textStyle={Styles.textCss} buttonText="X" />
+      <OperandButton id={SUBTRACT_DIGIT} viewStyle={Styles.second_bossmode} textStyle={Styles.textCss} buttonText="/" />
       <View style={Styles.third}> 
       </View>
       <View style={Styles.fourth}> 
@@ -95,7 +107,7 @@ const Styles = StyleSheet.create({
   first: {
     height: "9%",
     width: "95%",
-    backgroundColor: "#E6B8AF",
+    backgroundColor: "#718FBB",
     justifyContent: "space-evenly",
     borderRadius: 25,
   },
@@ -116,7 +128,7 @@ const Styles = StyleSheet.create({
   third: {
     height: "52%",
     width: "75%",
-    backgroundColor: "#E6D4AF",
+    backgroundColor: "#718FBB",
     borderRadius: 25,
   },
   fourth: {
