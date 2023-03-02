@@ -1,8 +1,6 @@
 import { View, Text, SafeAreaView, Button, Pressable, StyleSheet } from 'react-native'
-import React, { useLayoutEffect, useState, useEffect } from 'react'
+import React, { useLayoutEffect, useReducer } from 'react'
 import { useNavigation } from '@react-navigation/native'
-import { ChevronDownIcon, UserIcon, MagnifyingGlassIcon, PlayIcon } from 'react-native-heroicons/outline'
-import { Col, Row, Grid } from "react-native-easy-grid";
 import GameButton from './GameButton'
 import OperandButton from './OperandButton'
 
@@ -12,8 +10,6 @@ export const ACTIONABLE_ITEMS = {
   MULTIPLY_DIGIT: "multiply-digit",
   DIVIDE_DIGIT: "divide-digit"
 }
-
-var operationSelected = false;
 
 function reducer(state, {type, payload}) {
   if (type == ACTIONABLE_ITEMS.ADD_DIGIT) {
@@ -73,10 +69,10 @@ const Homescreen = () => {
       <GameButton dispatch={dispatch} viewStyle={Styles.second} textStyle={Styles.textCss} buttonText={'' + Math.floor(Math.random() * 11)} />
       <GameButton dispatch={dispatch} viewStyle={Styles.second} textStyle={Styles.textCss} buttonText={'' + Math.floor(Math.random() * 11)} />
       <GameButton dispatch={dispatch} viewStyle={Styles.second} textStyle={Styles.textCss} buttonText={'' + Math.floor(Math.random() * 11)} />
-      <OperandButton id={ADD_DIGIT} viewStyle={Styles.second_bossmode} textStyle={Styles.textCss} buttonText="+" />
-      <OperandButton id={SUBTRACT_DIGIT} viewStyle={Styles.second_bossmode} textStyle={Styles.textCss} buttonText="-" />
-      <OperandButton id={MULTIPLY_DIGIT} viewStyle={Styles.second_bossmode} textStyle={Styles.textCss} buttonText="X" />
-      <OperandButton id={SUBTRACT_DIGIT} viewStyle={Styles.second_bossmode} textStyle={Styles.textCss} buttonText="/" />
+      <OperandButton id={ACTIONABLE_ITEMS.ADD_DIGIT} viewStyle={Styles.second_bossmode} textStyle={Styles.textCss} buttonText="+" />
+      <OperandButton id={ACTIONABLE_ITEMS.SUBTRACT_DIGIT} viewStyle={Styles.second_bossmode} textStyle={Styles.textCss} buttonText="-" />
+      <OperandButton id={ACTIONABLE_ITEMS.MULTIPLY_DIGIT} viewStyle={Styles.second_bossmode} textStyle={Styles.textCss} buttonText="X" />
+      <OperandButton id={ACTIONABLE_ITEMS.DIVIDE_DIGIT} viewStyle={Styles.second_bossmode} textStyle={Styles.textCss} buttonText="/" />
       <View style={Styles.third}> 
       </View>
       <View style={Styles.fourth}> 
