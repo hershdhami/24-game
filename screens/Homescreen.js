@@ -1,9 +1,10 @@
-import { View, Text, SafeAreaView, Pressable, StyleSheet } from 'react-native'
+import { View, Text, SafeAreaView } from 'react-native'
 import React, { useLayoutEffect, useReducer } from 'react'
 import { Button } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 import GameButton from './GameButton'
 import OperandButton from './OperandButton'
+import styles from '../style/style'
 
 export const ACTIONABLE_ITEMS = {
   ADD_DIGIT: "add-digit",
@@ -60,32 +61,32 @@ const Homescreen = () => {
   let testButtonText = '' + Math.floor(Math.random() * 11);
 
   return (
-    <SafeAreaView style={Styles.container}>
+    <SafeAreaView style={styles.container}>
       {/* <Text className='text-red-500'> */}
         {/* Header */}
-      <View style={Styles.safeAreaHeader}>
+      <View style={styles.safeAreaHeader}>
       </View>
       
-      <View style={Styles.first}> 
-        <Text style={Styles.textCss}> 24-Game </Text>
+      <View style={styles.first}> 
+        <Text style={styles.textCss}> 24-Game </Text>
       </View>
       
-      <View id={"first-button"} style={Styles.second}> 
-                <Button style={Styles.textCss} onPress={() => dimBrightness("first-button")}>
+      <View id={"first-button"} style={styles.second}> 
+                <Button style={styles.textCss} onPress={() => dimBrightness("first-button")}>
                     {testButtonText}
                 </Button>
             </View>
 
-      <GameButton dispatch={dispatch} viewStyle={Styles.second} textStyle={Styles.textCss} buttonText={'' + Math.floor(Math.random() * 11)} />
-      <GameButton dispatch={dispatch} viewStyle={Styles.second} textStyle={Styles.textCss} buttonText={'' + Math.floor(Math.random() * 11)} />
-      <GameButton dispatch={dispatch} viewStyle={Styles.second} textStyle={Styles.textCss} buttonText={'' + Math.floor(Math.random() * 11)} />
-      <OperandButton id={ACTIONABLE_ITEMS.ADD_DIGIT} viewStyle={Styles.second_bossmode} textStyle={Styles.textCss} buttonText="+" />
-      <OperandButton id={ACTIONABLE_ITEMS.SUBTRACT_DIGIT} viewStyle={Styles.second_bossmode} textStyle={Styles.textCss} buttonText="-" />
-      <OperandButton id={ACTIONABLE_ITEMS.MULTIPLY_DIGIT} viewStyle={Styles.second_bossmode} textStyle={Styles.textCss} buttonText="X" />
-      <OperandButton id={ACTIONABLE_ITEMS.DIVIDE_DIGIT} viewStyle={Styles.second_bossmode} textStyle={Styles.textCss} buttonText="/" />
-      <View style={Styles.third}> 
+      <GameButton dispatch={dispatch} viewStyle={styles.second} textStyle={styles.textCss} buttonText={'' + Math.floor(Math.random() * 11)} />
+      <GameButton dispatch={dispatch} viewStyle={styles.second} textStyle={styles.textCss} buttonText={'' + Math.floor(Math.random() * 11)} />
+      <GameButton dispatch={dispatch} viewStyle={styles.second} textStyle={styles.textCss} buttonText={'' + Math.floor(Math.random() * 11)} />
+      <OperandButton id={ACTIONABLE_ITEMS.ADD_DIGIT} viewStyle={styles.second_bossmode} textStyle={styles.textCss} buttonText="+" />
+      <OperandButton id={ACTIONABLE_ITEMS.SUBTRACT_DIGIT} viewStyle={styles.second_bossmode} textStyle={styles.textCss} buttonText="-" />
+      <OperandButton id={ACTIONABLE_ITEMS.MULTIPLY_DIGIT} viewStyle={styles.second_bossmode} textStyle={styles.textCss} buttonText="X" />
+      <OperandButton id={ACTIONABLE_ITEMS.DIVIDE_DIGIT} viewStyle={styles.second_bossmode} textStyle={styles.textCss} buttonText="/" />
+      <View style={styles.third}> 
       </View>
-      <View style={Styles.fourth}> 
+      <View style={styles.fourth}> 
       </View>
        
         
@@ -94,60 +95,6 @@ const Homescreen = () => {
     </SafeAreaView>
   )
 }
-
-const Styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignContent: "space-around",
-    justifyContent: "space-evenly",
-    flexDirection: "row",
-    flexWrap: "wrap",
-    backgroundColor: "#EDEBE7"
-  },
-  safeAreaHeader: {
-    height: "3%",
-    width: "95%",
-    backgroundColor: "#EDEBE7",
-  },
-  first: {
-    height: "9%",
-    width: "95%",
-    backgroundColor: "#718FBB",
-    justifyContent: "space-evenly",
-    borderRadius: 25,
-  },
-  second: {
-    height: "14%",
-    width: "22.5%",
-    backgroundColor: "#718FBB",
-    borderRadius: 25,
-    justifyContent: "space-evenly",
-  },
-  second_bossmode: {
-    height: "8%",
-    width: "22.5%",
-    backgroundColor: "#718FBB",
-    borderRadius: 25,
-    justifyContent: "space-evenly",
-  },
-  third: {
-    height: "52%",
-    width: "75%",
-    backgroundColor: "#718FBB",
-    borderRadius: 25,
-  },
-  fourth: {
-    height: "52%",
-    width: "20%",
-    backgroundColor: "#EDEBE7",
-  },
-  textCss: {
-    fontSize: 25,
-    color: "white",
-    textAlign: "center"
-  }
-});
 export default Homescreen
 
 
