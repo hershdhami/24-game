@@ -1,5 +1,6 @@
-import { View, Text, SafeAreaView, Button, Pressable, StyleSheet } from 'react-native'
+import { View, Text, SafeAreaView, Pressable, StyleSheet } from 'react-native'
 import React, { useLayoutEffect, useReducer } from 'react'
+import { Button } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 import GameButton from './GameButton'
 import OperandButton from './OperandButton'
@@ -12,16 +13,18 @@ export const ACTIONABLE_ITEMS = {
 }
 
 function reducer(state, {type, payload}) {
-  if (type == ACTIONABLE_ITEMS.ADD_DIGIT) {
+  if (type == "first-button") {
       //Perform the ADD_DIGIT BS
-      var elem = document.getElementById({payload})
-      elem.style.backgroundColor("#718FBB")
-
       return {
         ...state,
         selectedButton: payload
       };
   }
+}
+
+function dimBrightness(payload) {
+  var elem = document.getElementById({payload})
+  elem.style.backgroundColor("#718FBB")
 }
 
 const Homescreen = () => {
@@ -54,18 +57,25 @@ const Homescreen = () => {
 
   const [{currentOperand, previousOperand, operation, selectedButton}, dispatch] = useReducer(reducer, {})
 
+  let testButtonText = '' + Math.floor(Math.random() * 11);
+
   return (
     <SafeAreaView style={Styles.container}>
       {/* <Text className='text-red-500'> */}
         {/* Header */}
       <View style={Styles.safeAreaHeader}>
-
       </View>
+      
       <View style={Styles.first}> 
         <Text style={Styles.textCss}> 24-Game </Text>
       </View>
       
-      <GameButton dispatch={dispatch} viewStyle={Styles.second} textStyle={Styles.textCss} buttonText={'' + Math.floor(Math.random() * 11)} />
+      <View id={"first-button"} style={Styles.second}> 
+                <Button style={Styles.textCss} onPress={() => dimBrightness("first-button")}>
+                    {testButtonText}
+                </Button>
+            </View>
+
       <GameButton dispatch={dispatch} viewStyle={Styles.second} textStyle={Styles.textCss} buttonText={'' + Math.floor(Math.random() * 11)} />
       <GameButton dispatch={dispatch} viewStyle={Styles.second} textStyle={Styles.textCss} buttonText={'' + Math.floor(Math.random() * 11)} />
       <GameButton dispatch={dispatch} viewStyle={Styles.second} textStyle={Styles.textCss} buttonText={'' + Math.floor(Math.random() * 11)} />
@@ -96,7 +106,7 @@ const Styles = StyleSheet.create({
     backgroundColor: "#EDEBE7"
   },
   safeAreaHeader: {
-    height: "4.5%",
+    height: "3%",
     width: "95%",
     backgroundColor: "#EDEBE7",
   },
