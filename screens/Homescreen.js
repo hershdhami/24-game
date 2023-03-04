@@ -1,9 +1,9 @@
 import { View, Text, SafeAreaView, StyleSheet } from 'react-native'
 import React, { useLayoutEffect, useReducer } from 'react'
-import { Button } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 import GameButton from './GameButton'
 import OperandButton from './OperandButton'
+import { Appbar, Button } from 'react-native-paper'
 
 export const ACTIONABLE_ITEMS = {
   ADD_DIGIT: "add-digit",
@@ -22,9 +22,13 @@ function reducer(state, {type, payload}) {
   }
 }
 
-function dimBrightness(payload) {
+export function dimBrightness(payload) {
   var elem = document.getElementById({payload})
   elem.style.backgroundColor("#718FBB")
+}
+
+function buttonFunction() {
+  console.log("Hello!")
 }
 
 const Homescreen = () => {
@@ -44,34 +48,27 @@ const Homescreen = () => {
 
   return (
     <SafeAreaView style={Styles.container}>
+
+      <Appbar.Header style={Styles.headerContainer}>
+          <Text style={Styles.headerTextStyle}> 24 - Game </Text>
+      </Appbar.Header>
       
-      <View style={Styles.safeAreaHeader}>
-      </View>
-      
-      <View style={Styles.first}> 
-        <Text style={Styles.textCss}> 24-Game </Text>
-      </View>
-      
-      <View id={"first-button"} style={Styles.second}> 
-              <Button style={Styles.textCss} onPress={() => dimBrightness("first-button")}>
-                  {testButtonText}
-              </Button>
+      <View style={Styles.mainGameContainer}> 
+        <Button mode="outlined" onPress={() => buttonFunction()} style={Styles.buttonContainer} labelStyle={{fontSize: 20}} textColor="white"> {'' + Math.floor(Math.random() * 11)} </Button>
+        <Button mode="outlined" onPress={() => buttonFunction()} style={Styles.buttonContainer} labelStyle={{fontSize: 20}} textColor="white"> {'' + Math.floor(Math.random() * 11)} </Button>
+        <Button mode="outlined" onPress={() => buttonFunction()} style={Styles.buttonContainer} labelStyle={{fontSize: 20}} textColor="white"> {'' + Math.floor(Math.random() * 11)} </Button>
+        <Button mode="outlined" onPress={() => buttonFunction()} style={Styles.buttonContainer} labelStyle={{fontSize: 20}} textColor="white"> {'' + Math.floor(Math.random() * 11)} </Button>
       </View>
 
-      <GameButton dispatch={dispatch} viewStyle={Styles.second} textStyle={Styles.textCss} buttonText={'' + Math.floor(Math.random() * 11)} />
-      <GameButton dispatch={dispatch} viewStyle={Styles.second} textStyle={Styles.textCss} buttonText={'' + Math.floor(Math.random() * 11)} />
-      <GameButton dispatch={dispatch} viewStyle={Styles.second} textStyle={Styles.textCss} buttonText={'' + Math.floor(Math.random() * 11)} />
-      <OperandButton id={ACTIONABLE_ITEMS.ADD_DIGIT} viewStyle={Styles.second_bossmode} textStyle={Styles.textCss} buttonText="+" />
-      <OperandButton id={ACTIONABLE_ITEMS.SUBTRACT_DIGIT} viewStyle={Styles.second_bossmode} textStyle={Styles.textCss} buttonText="-" />
-      <OperandButton id={ACTIONABLE_ITEMS.MULTIPLY_DIGIT} viewStyle={Styles.second_bossmode} textStyle={Styles.textCss} buttonText="X" />
-      <OperandButton id={ACTIONABLE_ITEMS.DIVIDE_DIGIT} viewStyle={Styles.second_bossmode} textStyle={Styles.textCss} buttonText="/" />
-
-      <View style={Styles.third}> 
-      </View>
-      <View style={Styles.fourth}> 
+      <View style={Styles.operandButtonContainer}>
+        <Button mode="outlined" onPress={() => buttonFunction()} style={Styles.operandButtons} labelStyle={{fontSize: 15}} textColor="white"> + </Button>
+        <Button mode="outlined" onPress={() => buttonFunction()} style={Styles.operandButtons} labelStyle={{fontSize: 15}} textColor="white"> - </Button>
+        <Button mode="outlined" onPress={() => buttonFunction()} style={Styles.operandButtons} labelStyle={{fontSize: 15}} textColor="white"> X </Button>
+        <Button mode="outlined" onPress={() => buttonFunction()} style={Styles.operandButtons} labelStyle={{fontSize: 15}} textColor="white"> / </Button>
+        <Button mode="outlined" onPress={() => buttonFunction()} style={Styles.operandButtons} labelStyle={{fontSize: 15}} textColor="white"> B </Button>
+        <Button mode="outlined" onPress={() => buttonFunction()} style={Styles.operandButtons} labelStyle={{fontSize: 15}} textColor="white"> F </Button>
       </View>
 
-      {/* </Text> */}
     </SafeAreaView>
   )
 }
@@ -79,113 +76,94 @@ export default Homescreen
 
 const Styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignContent: "space-around",
-    justifyContent: "space-evenly",
+    backgroundColor: "#d3d3d3",
+    height: "100%",
+    alignItems: "center"
+  },
+  mainGameContainer: {
+    height: "25%",
+    top: "20%",
+    width: "60%",
+    backgroundColor: "#d3d3d3",
+    display: "flex",
     flexDirection: "row",
+    borderColor: "white",
+    justifyContent: "space-around",
+    alignContent: "space-around",
     flexWrap: "wrap",
-    backgroundColor: "#EDEBE7"
   },
-  safeAreaHeader: {
-    height: "3%",
-    width: "95%",
-    backgroundColor: "#EDEBE7",
+  buttonContainer: {
+    width: "45%",
+    height: "40%",
+    alignContent: "center",
+    justifyContent: "center",
+    backgroundColor: "#483d8b",
+    tintColor: "black"
   },
-  first: {
-    height: "9%",
-    width: "95%",
-    backgroundColor: "#718FBB",
+  operandButtonContainer: {
+    height: "10%",
+    top: "20%",
+    width: "60%",
+    backgroundColor: "#d3d3d3",
+    display: "flex",
+    flexDirection: "row",
+    borderColor: "white",
+    borderRadius: 20,
+    justifyContent: "space-around",
+    alignContent: "space-around",
+    flexWrap: "wrap",
+  },
+  operandButtons: {
+    width: "5%",
+    height: "50%",
+    alignContent: "center",
+    justifyContent: "center",
+    backgroundColor: "#483d8b",
+    tintColor: "black"
+  },
+
+  //Header CSS
+  headerContainer: {
+    height: 50,
     justifyContent: "space-evenly",
-    borderRadius: 25,
+    backgroundColor: '#483d8b',
+    minWidth: "100%",
+    flexDirection: "column",
+    display: "flex"
   },
-  second: {
-    height: "14%",
-    width: "22.5%",
-    backgroundColor: "#718FBB",
-    borderRadius: 25,
-    justifyContent: "space-evenly",
-  },
-  second_bossmode: {
-    height: "8%",
-    width: "22.5%",
-    backgroundColor: "#718FBB",
-    borderRadius: 25,
-    justifyContent: "space-evenly",
-  },
-  third: {
-    height: "52%",
-    width: "75%",
-    backgroundColor: "#718FBB",
-    borderRadius: 25,
-  },
-  fourth: {
-    height: "52%",
-    width: "20%",
-    backgroundColor: "#EDEBE7",
-  },
-  textCss: {
+  headerTextStyle: {
     fontSize: 25,
-    color: "white",
-    textAlign: "center"
+    color: "white"
   }
 });
 
 /*
-<View className='pl-1 pt-4 pb-8 items-center mx-4 space-x-1.5'>
-          <Text className='text-center font-bold'>
-            24-Game
-          </Text>
-        </View>
+    class="grid grid-cols-2 top-1/4 right-1/4 left-1/4 w-1/2 h-1/5 bg-green-400 justify-evenly"
 
-        <View style={Styles.second}> 
-        <Pressable>
-          <Text style={Styles.textCss}> 4 </Text>
-        </Pressable>
-      </View>
-*/
+    container: {
+      flex: 1,
+      alignContent: "space-around",
+      justifyContent: "space-evenly",
+      flexDirection: "row",
+      flexWrap: "wrap",
+      backgroundColor: "#EDEBE7"
+    },
 
-/*
-<Image 
-            source={{
-              url: 'https://links.papareact.com/wru'
-            }}
+    <View style={Styles.first}>
+    </View>
 
-            //h-7: Height of 7
-            //w-7: WIdth of 7
-            className='h-8 w-8 bg-gray-200 p-4 rounded=full'
-          />
+    <GameButton dispatch={dispatch} viewStyle={Styles.second} textStyle={Styles.textCss} buttonText={'' + Math.floor(Math.random() * 11)} />
+    <GameButton dispatch={dispatch} viewStyle={Styles.second} textStyle={Styles.textCss} buttonText={'' + Math.floor(Math.random() * 11)} />
+    <GameButton dispatch={dispatch} viewStyle={Styles.second} textStyle={Styles.textCss} buttonText={'' + Math.floor(Math.random() * 11)} />
+    <GameButton dispatch={dispatch} viewStyle={Styles.second} textStyle={Styles.textCss} buttonText={'' + Math.floor(Math.random() * 11)} />
 
-          {/*This means that this view will take up most of the room*//*}
-/*
-          <View className='flex-1'>
-              <Text className='font-bold text-gray-400 text-xs pt-1'>Deliver Now!</Text>
-              <Text className='font-bold text-xl'>Current Location
-              <ChevronDownIcon size={20} colors="#00CCBB" />
-              </Text>
-          </View>
-          
-          <UserIcon size={35} color="#00CCBB" />
+    <OperandButton id={ACTIONABLE_ITEMS.ADD_DIGIT} viewStyle={Styles.second_bossmode} textStyle={Styles.textCss} buttonText="+" />
+    <OperandButton id={ACTIONABLE_ITEMS.SUBTRACT_DIGIT} viewStyle={Styles.second_bossmode} textStyle={Styles.textCss} buttonText="-" />
+    <OperandButton id={ACTIONABLE_ITEMS.MULTIPLY_DIGIT} viewStyle={Styles.second_bossmode} textStyle={Styles.textCss} buttonText="X" />
+    <OperandButton id={ACTIONABLE_ITEMS.DIVIDE_DIGIT} viewStyle={Styles.second_bossmode} textStyle={Styles.textCss} buttonText="/" />
 
-          <DigitButton digit={Math.floor(Math.random() * 11)} />
-            <DigitButton digit={Math.floor(Math.random() * 11)} />
-            <DigitButton digit={Math.floor(Math.random() * 11)} />
-            <DigitButton digit={Math.floor(Math.random() * 11)} />
-            <OperandButton operation={"+"} />
-            <OperandButton operation={"-"} />
-            <OperandButton operation={"x"} />
-            <OperandButton operation={"/"} />
-*/
-
-/*
-
-<FlatList className='text-xl'
-            data={dataSource}
-            renderItem={({item}) => (
-              <DigitButton className='text-xl' digit={item.src} />
-            )}
-            numColumns={4}
-            keyExtractor={(item, index) => index}
-          />
-
+    <View style={Styles.third}> 
+    </View>
+    <View style={Styles.fourth}> 
+    </View>
 */

@@ -1,9 +1,9 @@
 import { View, Pressable, Text } from 'react-native'
+import { dimBrightness } from './Homescreen'
+import { Button } from 'react-native-paper'
 
-export default function GameButton({viewStyle, textStyle, buttonText, dispatch}) {
-    return <View id={buttonText} style={viewStyle}> 
-                <Pressable onPress={() => dispatch({type: buttonText, digit: buttonText})}>
-                    <Text style={textStyle}> {buttonText} </Text>
-                </Pressable>
-            </View>
+export default function GameButton({viewStyle, textStyle, buttonText }) {
+    return <Button style={viewStyle} onPress={() => dimBrightness()}>
+                    {buttonText}
+            </Button>
 }
