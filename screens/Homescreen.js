@@ -4,6 +4,7 @@ import { Button } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 import GameButton from './GameButton'
 import OperandButton from './OperandButton'
+import EqualsButton from './EqualsButton'
 
 export const ACTIONABLE_ITEMS = {
   ADD_DIGIT: "add-digit",
@@ -22,9 +23,58 @@ function reducer(state, {type, payload}) {
   }
 }
 
-function dimBrightness(payload) {
+export function dimBrightness(payload) {
   var elem = document.getElementById({payload})
   elem.style.backgroundColor("#718FBB")
+}
+
+let first = '' + Math.floor(Math.random() * 11);
+let second = '' + Math.floor(Math.random() * 11);
+let third = '' + Math.floor(Math.random() * 11);
+let fourth = '' + Math.floor(Math.random() * 11);
+let numbers = ["0","0"];
+let i = 0;
+
+var operand;
+
+var final;
+
+var thing;
+var thing1;
+
+export function operandf(name){
+  if(i == 0){
+    operand = name;
+    i = 1;
+    //document.getElementById(thing.id).disabled = true;
+  }
+}
+
+export function digitf(name, curr){
+  //if(curr !=  thing){
+    numbers[i] = name;
+    if(i == 0){thing = curr;}
+  //}
+}
+
+export function equals(){
+  switch(operand){
+    case "+":
+      final = Number(numbers[0]) + Number(numbers[1]);
+      break;
+    case "-":
+      final = numbers[0] - numbers[1];
+      break;
+    case "X":
+      final = numbers[0] * numbers[1];
+      break;
+    case "/":
+      final = numbers[0] / numbers[1];
+      break;
+  }
+  i=0;
+  console.log(numbers[0], numbers[1], final);
+  numbers = ["0","0"]
 }
 
 const Homescreen = () => {
@@ -40,8 +90,6 @@ const Homescreen = () => {
 
   }, []) //As soon as the screen appears "do something"
 
-  let testButtonText = '' + Math.floor(Math.random() * 11);
-
   return (
     <SafeAreaView style={Styles.container}>
       
@@ -51,20 +99,16 @@ const Homescreen = () => {
       <View style={Styles.first}> 
         <Text style={Styles.textCss}> 24-Game </Text>
       </View>
-      
-      <View id={"first-button"} style={Styles.second}> 
-              <Button style={Styles.textCss} onPress={() => dimBrightness("first-button")}>
-                  {testButtonText}
-              </Button>
-      </View>
 
-      <GameButton dispatch={dispatch} viewStyle={Styles.second} textStyle={Styles.textCss} buttonText={'' + Math.floor(Math.random() * 11)} />
-      <GameButton dispatch={dispatch} viewStyle={Styles.second} textStyle={Styles.textCss} buttonText={'' + Math.floor(Math.random() * 11)} />
-      <GameButton dispatch={dispatch} viewStyle={Styles.second} textStyle={Styles.textCss} buttonText={'' + Math.floor(Math.random() * 11)} />
+      <GameButton id={"first"} viewStyle={Styles.second} textStyle={Styles.textCss} buttonText={first} />
+      <GameButton id={"second"} viewStyle={Styles.second} textStyle={Styles.textCss} buttonText={second} />
+      <GameButton id={"third"} viewStyle={Styles.second} textStyle={Styles.textCss} buttonText={third} />
+      <GameButton id={"fourth"} viewStyle={Styles.second} textStyle={Styles.textCss} buttonText={fourth} />
       <OperandButton id={ACTIONABLE_ITEMS.ADD_DIGIT} viewStyle={Styles.second_bossmode} textStyle={Styles.textCss} buttonText="+" />
       <OperandButton id={ACTIONABLE_ITEMS.SUBTRACT_DIGIT} viewStyle={Styles.second_bossmode} textStyle={Styles.textCss} buttonText="-" />
       <OperandButton id={ACTIONABLE_ITEMS.MULTIPLY_DIGIT} viewStyle={Styles.second_bossmode} textStyle={Styles.textCss} buttonText="X" />
       <OperandButton id={ACTIONABLE_ITEMS.DIVIDE_DIGIT} viewStyle={Styles.second_bossmode} textStyle={Styles.textCss} buttonText="/" />
+      <EqualsButton id={"equals"} viewStyle={Styles.second} textStyle={Styles.textCss} buttonText="=" />
 
       <View style={Styles.third}> 
       </View>
