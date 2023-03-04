@@ -1,8 +1,7 @@
 import { View, Text, SafeAreaView, StyleSheet } from 'react-native'
 import React, { useLayoutEffect, useReducer } from 'react'
 import { useNavigation } from '@react-navigation/native'
-import { Appbar } from 'react-native-paper'
-import { Pressable } from 'react-native'
+import Pressable from './Pressable'
 
 export const ACTIONABLE_ITEMS = {
   ADD_DIGIT: "add-digit",
@@ -38,7 +37,16 @@ const Homescreen = () => {
 
     //This allows us to change the default header and etc.
     navigation.setOptions({
-      headerShown: false,
+      title: '24 GAME',
+      headerStyle: {
+        backgroundColor: '#483d8b',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+        fontSize: 25
+      },
+      headerTitleAlign: 'center'
     });
 
   }, []) //As soon as the screen appears "do something"
@@ -48,22 +56,37 @@ const Homescreen = () => {
   return (
     <SafeAreaView style={Styles.container}>
 
-      <Appbar.Header style={Styles.headerContainer}>
-          <Text style={Styles.headerTextStyle}> 24 - Game </Text>
-      </Appbar.Header>
+      {/* TO MAKE PRESSABLE DRAGGABLE
+          https://www.kirupa.com/html5/drag.htm
+      */}
       
       <View style={Styles.mainGameContainer}> 
-        <Pressable onPress={() => buttonFunction()} style={Styles.buttonContainer}>
+        <Pressable activeOpacity={0.7} onPress={() => buttonFunction()} style={Styles.buttonContainer}>
           <Text style={Styles.buttonTextStyle}> {'' + Math.floor(Math.random() * 11)} </Text>
         </Pressable>
-        <Pressable onPress={() => buttonFunction()} style={Styles.buttonContainer}>
+        <Pressable activeOpacity={0.7} onPress={() => buttonFunction()} style={Styles.buttonContainer}>
           <Text style={Styles.buttonTextStyle}> {'' + Math.floor(Math.random() * 11)} </Text>
         </Pressable>
-        <Pressable onPress={() => buttonFunction()} style={Styles.buttonContainer}>
+        <Pressable activeOpacity={0.7} onPress={() => buttonFunction()} style={Styles.buttonContainer}>
           <Text style={Styles.buttonTextStyle}> {'' + Math.floor(Math.random() * 11)} </Text>
         </Pressable>
-        <Pressable onPress={() => buttonFunction()} style={Styles.buttonContainer}>
+        <Pressable activeOpacity={0.7} onPress={() => buttonFunction()} style={Styles.buttonContainer}>
           <Text style={Styles.buttonTextStyle}> {'' + Math.floor(Math.random() * 11)} </Text>
+        </Pressable>
+      </View>
+
+      <View style={Styles.operandButtonContainer}>
+        <Pressable activeOpacity={0.7} onPress={() => buttonFunction()} style={Styles.operandButtons}>
+          <Text style={Styles.buttonTextStyle}> + </Text>
+        </Pressable>
+        <Pressable activeOpacity={0.7} onPress={() => buttonFunction()} style={Styles.operandButtons}>
+          <Text style={Styles.buttonTextStyle}> - </Text>
+        </Pressable>
+        <Pressable activeOpacity={0.7} onPress={() => buttonFunction()} style={Styles.operandButtons}>
+          <Text style={Styles.buttonTextStyle}> / </Text>
+        </Pressable>
+        <Pressable activeOpacity={0.7} onPress={() => buttonFunction()} style={Styles.operandButtons}>
+          <Text style={Styles.buttonTextStyle}> X </Text>
         </Pressable>
       </View>
 
@@ -91,11 +114,10 @@ const Styles = StyleSheet.create({
     flexWrap: "wrap",
   },
   buttonContainer: {
-    width: "40%",
-    height: "40%",
+    width: "45%",
+    height: "45%",
     alignContent: "center",
     justifyContent: "center",
-    borderRadius: 20,
     backgroundColor: "#483d8b",
     tintColor: "black"
   },
@@ -113,7 +135,7 @@ const Styles = StyleSheet.create({
     flexWrap: "wrap",
   },
   operandButtons: {
-    width: "5%",
+    width: "20%",
     height: "50%",
     alignContent: "center",
     justifyContent: "center",
@@ -121,7 +143,7 @@ const Styles = StyleSheet.create({
     tintColor: "black"
   },
   buttonTextStyle: {
-    fontSize: 20,
+    fontSize: 25,
     color:"white",
     alignContent: "center",
     justifyContent: "center",
@@ -144,6 +166,10 @@ const Styles = StyleSheet.create({
 });
 
 /*
+    navigation.setOptions({
+      headerShown: false,
+    });
+
       <View style={Styles.operandButtonContainer}>
         <Button mode="outlined" onPress={() => buttonFunction()} style={Styles.operandButtons} labelStyle={{fontSize: 15}} textColor="white"> + </Button>
         <Button mode="outlined" onPress={() => buttonFunction()} style={Styles.operandButtons} labelStyle={{fontSize: 15}} textColor="white"> - </Button>

@@ -6,7 +6,6 @@ import Homescreen from './screens/Homescreen';
 const Stack = createNativeStackNavigator();
 
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
 
 export default class App extends React.Component {
   render() {
@@ -14,7 +13,7 @@ export default class App extends React.Component {
       <NavigationContainer>
         <TailwindProvider>
           <Stack.Navigator>
-            <Stack.Screen name ="Home" component={Homescreen} />
+            <Stack.Screen name ="24-Game" component={Homescreen} />
           </Stack.Navigator>
         </TailwindProvider>
       </NavigationContainer>
