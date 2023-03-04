@@ -29,22 +29,7 @@ function dimBrightness(payload) {
 
 const Homescreen = () => {
   const navigation = useNavigation();
-
-  //One way to say Hello is equal to a function
-  hello = function() {
-    console.log("Hello world");
-  }
-
-  //Same thing written in another way
-  //Don't really care about what the 'function name' is
-  hello = () => {
-    console.log("Hello world");
-  }
-
-  //First parameter is the setup function
-    //This will run before component is added to DOM, react will run setup function
-  //Second parameter is the dependcies used in the setup 
-    //Whenever smth inside this array change it will load again too!
+  const [{currentOperand, previousOperand, operation, selectedButton}, dispatch] = useReducer(reducer, {})
 
   useLayoutEffect(() => {
 
@@ -55,14 +40,11 @@ const Homescreen = () => {
 
   }, []) //As soon as the screen appears "do something"
 
-  const [{currentOperand, previousOperand, operation, selectedButton}, dispatch] = useReducer(reducer, {})
-
   let testButtonText = '' + Math.floor(Math.random() * 11);
 
   return (
     <SafeAreaView style={Styles.container}>
-      {/* <Text className='text-red-500'> */}
-        {/* Header */}
+      
       <View style={Styles.safeAreaHeader}>
       </View>
       
