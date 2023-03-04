@@ -1,7 +1,7 @@
 import { View, Text, SafeAreaView, StyleSheet } from 'react-native'
 import React, { useLayoutEffect, useReducer } from 'react'
-import { Button } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
+import Pressable from './Pressable'
 import GameButton from './GameButton'
 import OperandButton from './OperandButton'
 import EqualsButton from './EqualsButton'
@@ -85,34 +85,48 @@ const Homescreen = () => {
 
     //This allows us to change the default header and etc.
     navigation.setOptions({
-      headerShown: false,
+      title: '24 GAME',
+      headerStyle: {
+        backgroundColor: '#483d8b',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+        fontSize: 25
+      },
+      headerTitleAlign: 'center'
     });
 
   }, []) //As soon as the screen appears "do something"
 
   return (
     <SafeAreaView style={Styles.container}>
-      
-      <View style={Styles.safeAreaHeader}>
-      </View>
-      
-      <View style={Styles.first}> 
-        <Text style={Styles.textCss}> 24-Game </Text>
+
+       {/* TO MAKE PRESSABLE DRAGGABLE
+          https://www.kirupa.com/html5/drag.htm
+      */}
+
+      <View style={Styles.mainGameContainer}> 
+        <GameButton viewStyle={Styles.buttonContainer} textStyle={Styles.buttonTextStyle} buttonText={first} id="first"> </GameButton>
+        <GameButton viewStyle={Styles.buttonContainer} textStyle={Styles.buttonTextStyle} buttonText={second} id="second"> </GameButton>
+        <GameButton viewStyle={Styles.buttonContainer} textStyle={Styles.buttonTextStyle} buttonText={third} id="third"> </GameButton>
+        <GameButton viewStyle={Styles.buttonContainer} textStyle={Styles.buttonTextStyle} buttonText={fourth} id="fourth"> </GameButton>
       </View>
 
-      <GameButton id={"first"} viewStyle={Styles.second} textStyle={Styles.textCss} buttonText={first} />
-      <GameButton id={"second"} viewStyle={Styles.second} textStyle={Styles.textCss} buttonText={second} />
-      <GameButton id={"third"} viewStyle={Styles.second} textStyle={Styles.textCss} buttonText={third} />
-      <GameButton id={"fourth"} viewStyle={Styles.second} textStyle={Styles.textCss} buttonText={fourth} />
-      <OperandButton id={ACTIONABLE_ITEMS.ADD_DIGIT} viewStyle={Styles.second_bossmode} textStyle={Styles.textCss} buttonText="+" />
-      <OperandButton id={ACTIONABLE_ITEMS.SUBTRACT_DIGIT} viewStyle={Styles.second_bossmode} textStyle={Styles.textCss} buttonText="-" />
-      <OperandButton id={ACTIONABLE_ITEMS.MULTIPLY_DIGIT} viewStyle={Styles.second_bossmode} textStyle={Styles.textCss} buttonText="X" />
-      <OperandButton id={ACTIONABLE_ITEMS.DIVIDE_DIGIT} viewStyle={Styles.second_bossmode} textStyle={Styles.textCss} buttonText="/" />
-      <EqualsButton id={"equals"} viewStyle={Styles.second} textStyle={Styles.textCss} buttonText="=" />
-
-      <View style={Styles.third}> 
-      </View>
-      <View style={Styles.fourth}> 
+      <View style={Styles.operandButtonContainer}>
+        <Pressable id={ACTIONABLE_ITEMS.ADD_DIGIT} activeOpacity={0.7} onPress={() => operandf("+")} style={Styles.operandButtons}>
+          <Text style={Styles.buttonTextStyle}> + </Text>
+        </Pressable>
+        <Pressable id={ACTIONABLE_ITEMS.SUBTRACT_DIGIT} activeOpacity={0.7} onPress={() => operandf("-")} style={Styles.operandButtons}>
+          <Text style={Styles.buttonTextStyle}> - </Text>
+        </Pressable>
+        <Pressable id={ACTIONABLE_ITEMS.MULTIPLY_DIGIT} activeOpacity={0.7} onPress={() => operandf("X")} style={Styles.operandButtons}>
+          <Text style={Styles.buttonTextStyle}> X </Text>
+        </Pressable>
+        <Pressable id={ACTIONABLE_ITEMS.DIVIDE_DIGIT} activeOpacity={0.7} onPress={() => operandf("/")} style={Styles.operandButtons}>
+          <Text style={Styles.buttonTextStyle}> / </Text>
+        </Pressable>
+        <EqualsButton id={"equals"} viewStyle={Styles.operandButtons} textStyle={Styles.buttonTextStyle} buttonText="=" />
       </View>
 
       {/* </Text> */}
@@ -123,55 +137,71 @@ export default Homescreen
 
 const Styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignContent: "space-around",
-    justifyContent: "space-evenly",
+    backgroundColor: "#d3d3d3",
+    height: "100%",
+    alignItems: "center"
+  },
+  mainGameContainer: {
+    height: "25%",
+    top: "20%",
+    width: "60%",
+    backgroundColor: "#d3d3d3",
+    display: "flex",
     flexDirection: "row",
+    borderColor: "white",
+    justifyContent: "space-around",
+    alignContent: "space-around",
     flexWrap: "wrap",
-    backgroundColor: "#EDEBE7"
   },
-  safeAreaHeader: {
-    height: "3%",
-    width: "95%",
-    backgroundColor: "#EDEBE7",
+  buttonContainer: {
+    width: "45%",
+    height: "45%",
+    alignContent: "center",
+    justifyContent: "center",
+    backgroundColor: "#483d8b",
+    tintColor: "black"
   },
-  first: {
-    height: "9%",
-    width: "95%",
-    backgroundColor: "#718FBB",
-    justifyContent: "space-evenly",
-    borderRadius: 25,
+  operandButtonContainer: {
+    height: "10%",
+    top: "20%",
+    width: "60%",
+    backgroundColor: "#d3d3d3",
+    display: "flex",
+    flexDirection: "row",
+    borderColor: "white",
+    borderRadius: 20,
+    justifyContent: "space-around",
+    alignContent: "space-around",
+    flexWrap: "wrap",
   },
-  second: {
-    height: "14%",
-    width: "22.5%",
-    backgroundColor: "#718FBB",
-    borderRadius: 25,
-    justifyContent: "space-evenly",
-  },
-  second_bossmode: {
-    height: "8%",
-    width: "22.5%",
-    backgroundColor: "#718FBB",
-    borderRadius: 25,
-    justifyContent: "space-evenly",
-  },
-  third: {
-    height: "52%",
-    width: "75%",
-    backgroundColor: "#718FBB",
-    borderRadius: 25,
-  },
-  fourth: {
-    height: "52%",
+  operandButtons: {
     width: "20%",
-    backgroundColor: "#EDEBE7",
+    height: "50%",
+    alignContent: "center",
+    justifyContent: "center",
+    backgroundColor: "#483d8b",
+    tintColor: "black"
   },
-  textCss: {
+  buttonTextStyle: {
     fontSize: 25,
-    color: "white",
+    color:"white",
+    alignContent: "center",
+    justifyContent: "center",
     textAlign: "center"
+  },
+
+  //Header CSS
+  headerContainer: {
+    height: 50,
+    justifyContent: "space-evenly",
+    backgroundColor: '#483d8b',
+    minWidth: "100%",
+    flexDirection: "column",
+    display: "flex"
+  },
+  headerTextStyle: {
+    fontSize: 25,
+    color: "white"
   }
 });
 
