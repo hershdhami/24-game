@@ -1,9 +1,8 @@
 import { View, Text, SafeAreaView, StyleSheet } from 'react-native'
 import React, { useLayoutEffect, useReducer } from 'react'
 import { useNavigation } from '@react-navigation/native'
-import GameButton from './GameButton'
-import OperandButton from './OperandButton'
-import { Appbar, Button } from 'react-native-paper'
+import { Appbar } from 'react-native-paper'
+import { Pressable } from 'react-native'
 
 export const ACTIONABLE_ITEMS = {
   ADD_DIGIT: "add-digit",
@@ -54,19 +53,18 @@ const Homescreen = () => {
       </Appbar.Header>
       
       <View style={Styles.mainGameContainer}> 
-        <Button mode="outlined" onPress={() => buttonFunction()} style={Styles.buttonContainer} labelStyle={{fontSize: 20}} textColor="white"> {'' + Math.floor(Math.random() * 11)} </Button>
-        <Button mode="outlined" onPress={() => buttonFunction()} style={Styles.buttonContainer} labelStyle={{fontSize: 20}} textColor="white"> {'' + Math.floor(Math.random() * 11)} </Button>
-        <Button mode="outlined" onPress={() => buttonFunction()} style={Styles.buttonContainer} labelStyle={{fontSize: 20}} textColor="white"> {'' + Math.floor(Math.random() * 11)} </Button>
-        <Button mode="outlined" onPress={() => buttonFunction()} style={Styles.buttonContainer} labelStyle={{fontSize: 20}} textColor="white"> {'' + Math.floor(Math.random() * 11)} </Button>
-      </View>
-
-      <View style={Styles.operandButtonContainer}>
-        <Button mode="outlined" onPress={() => buttonFunction()} style={Styles.operandButtons} labelStyle={{fontSize: 15}} textColor="white"> + </Button>
-        <Button mode="outlined" onPress={() => buttonFunction()} style={Styles.operandButtons} labelStyle={{fontSize: 15}} textColor="white"> - </Button>
-        <Button mode="outlined" onPress={() => buttonFunction()} style={Styles.operandButtons} labelStyle={{fontSize: 15}} textColor="white"> X </Button>
-        <Button mode="outlined" onPress={() => buttonFunction()} style={Styles.operandButtons} labelStyle={{fontSize: 15}} textColor="white"> / </Button>
-        <Button mode="outlined" onPress={() => buttonFunction()} style={Styles.operandButtons} labelStyle={{fontSize: 15}} textColor="white"> B </Button>
-        <Button mode="outlined" onPress={() => buttonFunction()} style={Styles.operandButtons} labelStyle={{fontSize: 15}} textColor="white"> F </Button>
+        <Pressable onPress={() => buttonFunction()} style={Styles.buttonContainer}>
+          <Text style={Styles.buttonTextStyle}> {'' + Math.floor(Math.random() * 11)} </Text>
+        </Pressable>
+        <Pressable onPress={() => buttonFunction()} style={Styles.buttonContainer}>
+          <Text style={Styles.buttonTextStyle}> {'' + Math.floor(Math.random() * 11)} </Text>
+        </Pressable>
+        <Pressable onPress={() => buttonFunction()} style={Styles.buttonContainer}>
+          <Text style={Styles.buttonTextStyle}> {'' + Math.floor(Math.random() * 11)} </Text>
+        </Pressable>
+        <Pressable onPress={() => buttonFunction()} style={Styles.buttonContainer}>
+          <Text style={Styles.buttonTextStyle}> {'' + Math.floor(Math.random() * 11)} </Text>
+        </Pressable>
       </View>
 
     </SafeAreaView>
@@ -93,10 +91,11 @@ const Styles = StyleSheet.create({
     flexWrap: "wrap",
   },
   buttonContainer: {
-    width: "45%",
+    width: "40%",
     height: "40%",
     alignContent: "center",
     justifyContent: "center",
+    borderRadius: 20,
     backgroundColor: "#483d8b",
     tintColor: "black"
   },
@@ -121,6 +120,13 @@ const Styles = StyleSheet.create({
     backgroundColor: "#483d8b",
     tintColor: "black"
   },
+  buttonTextStyle: {
+    fontSize: 20,
+    color:"white",
+    alignContent: "center",
+    justifyContent: "center",
+    textAlign: "center"
+  },
 
   //Header CSS
   headerContainer: {
@@ -136,6 +142,17 @@ const Styles = StyleSheet.create({
     color: "white"
   }
 });
+
+/*
+      <View style={Styles.operandButtonContainer}>
+        <Button mode="outlined" onPress={() => buttonFunction()} style={Styles.operandButtons} labelStyle={{fontSize: 15}} textColor="white"> + </Button>
+        <Button mode="outlined" onPress={() => buttonFunction()} style={Styles.operandButtons} labelStyle={{fontSize: 15}} textColor="white"> - </Button>
+        <Button mode="outlined" onPress={() => buttonFunction()} style={Styles.operandButtons} labelStyle={{fontSize: 15}} textColor="white"> X </Button>
+        <Button mode="outlined" onPress={() => buttonFunction()} style={Styles.operandButtons} labelStyle={{fontSize: 15}} textColor="white"> / </Button>
+        <Button mode="outlined" onPress={() => buttonFunction()} style={Styles.operandButtons} labelStyle={{fontSize: 15}} textColor="white"> B </Button>
+        <Button mode="outlined" onPress={() => buttonFunction()} style={Styles.operandButtons} labelStyle={{fontSize: 15}} textColor="white"> F </Button>
+      </View>
+*/
 
 /*
     class="grid grid-cols-2 top-1/4 right-1/4 left-1/4 w-1/2 h-1/5 bg-green-400 justify-evenly"
