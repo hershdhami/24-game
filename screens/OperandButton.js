@@ -1,10 +1,9 @@
-import { View, Pressable, Text } from 'react-native'
+import { Text } from 'react-native'
 import { operandf } from './Homescreen'
+import Pressable from './Pressable'
 
-export default function OperandButton({id, viewStyle, textStyle, buttonText, dispatch}) {
-    return <View id={id} style={viewStyle}> 
-                <Pressable onPress={() => operandf(buttonText)}>
-                    <Text style={textStyle}> {buttonText} </Text>
-                </Pressable>
-            </View>
+export default function OperandButton({id, viewStyle, textStyle, buttonText}) {
+    return <Pressable id={id} activeOpacity={0.7} onPress={() => operandf(buttonText)} style={viewStyle}>
+                <Text style={textStyle}> {buttonText} </Text>
+            </Pressable>
 }

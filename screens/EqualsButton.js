@@ -1,11 +1,11 @@
-import { View, Pressable, Text } from 'react-native'
+import { Text } from 'react-native'
 import { equals } from './Homescreen'
+import Pressable from './Pressable'
 
 
 export default function EqualsButton({viewStyle, textStyle, buttonText, id}) {
-    return <View id={id} style={viewStyle}> 
-                <Pressable onPress={() => equals()}>
-                    <Text style={textStyle}> {buttonText} </Text>
-                </Pressable>
-            </View>
+    return <Pressable id={id} activeOpacity={0.7} style={viewStyle} onPress={() => equals()}>
+                <Text style={textStyle}> {buttonText} </Text>
+            </Pressable>
+                
 }

@@ -77,61 +77,51 @@ export function equals(){
   numbers = ["0","0"]
 }
 
-const Homescreen = () => {
-  const navigation = useNavigation();
-  const [{currentOperand, previousOperand, operation, selectedButton}, dispatch] = useReducer(reducer, {})
+class Homescreen extends React.Component {
+  constructor() {
+    super();
+    state = {
+      opacity: 0
+    }
+  }
+  
+  componentDidMount() {
+    //Same as useLayoutEffect
+  }
+  componentDidUpdate() {
+    //Same as useLayoutEffect
+  }
+  
 
-  useLayoutEffect(() => {
-
-    //This allows us to change the default header and etc.
-    navigation.setOptions({
-      title: '24 GAME',
-      headerStyle: {
-        backgroundColor: '#483d8b',
-      },
-      headerTintColor: '#fff',
-      headerTitleStyle: {
-        fontWeight: 'bold',
-        fontSize: 25
-      },
-      headerTitleAlign: 'center'
-    });
-
-  }, []) //As soon as the screen appears "do something"
-
-  return (
-    <SafeAreaView style={Styles.container}>
-
-       {/* TO MAKE PRESSABLE DRAGGABLE
-          https://www.kirupa.com/html5/drag.htm
-      */}
-
-      <View style={Styles.mainGameContainer}> 
-        <GameButton viewStyle={Styles.buttonContainer} textStyle={Styles.buttonTextStyle} buttonText={first} id="first"> </GameButton>
-        <GameButton viewStyle={Styles.buttonContainer} textStyle={Styles.buttonTextStyle} buttonText={second} id="second"> </GameButton>
-        <GameButton viewStyle={Styles.buttonContainer} textStyle={Styles.buttonTextStyle} buttonText={third} id="third"> </GameButton>
-        <GameButton viewStyle={Styles.buttonContainer} textStyle={Styles.buttonTextStyle} buttonText={fourth} id="fourth"> </GameButton>
-      </View>
-
-      <View style={Styles.operandButtonContainer}>
-        <Pressable id={ACTIONABLE_ITEMS.ADD_DIGIT} activeOpacity={0.7} onPress={() => operandf("+")} style={Styles.operandButtons}>
-          <Text style={Styles.buttonTextStyle}> + </Text>
-        </Pressable>
-        <Pressable id={ACTIONABLE_ITEMS.SUBTRACT_DIGIT} activeOpacity={0.7} onPress={() => operandf("-")} style={Styles.operandButtons}>
-          <Text style={Styles.buttonTextStyle}> - </Text>
-        </Pressable>
-        <Pressable id={ACTIONABLE_ITEMS.MULTIPLY_DIGIT} activeOpacity={0.7} onPress={() => operandf("X")} style={Styles.operandButtons}>
-          <Text style={Styles.buttonTextStyle}> X </Text>
-        </Pressable>
-        <Pressable id={ACTIONABLE_ITEMS.DIVIDE_DIGIT} activeOpacity={0.7} onPress={() => operandf("/")} style={Styles.operandButtons}>
-          <Text style={Styles.buttonTextStyle}> / </Text>
-        </Pressable>
-        <EqualsButton id={"equals"} viewStyle={Styles.operandButtons} textStyle={Styles.buttonTextStyle} buttonText="=" />
-      </View>
-
-      {/* </Text> */}
-    </SafeAreaView>
-  )
+  render() {
+    return (
+      <SafeAreaView style={Styles.container}>
+  
+         {/* TO MAKE PRESSABLE DRAGGABLE
+            https://www.kirupa.com/html5/drag.htm
+        */}
+  
+        <View style={Styles.mainGameContainer}> 
+          <Pressable id={"first"} activeOpacity={0.7} onPress={() => digitf(first, this)} style={Styles.buttonContainer}>
+            <Text style={Styles.buttonTextStyle}> {first} </Text>
+          </Pressable>
+          <GameButton viewStyle={Styles.buttonContainer} textStyle={Styles.buttonTextStyle} buttonText={second} id="second"> </GameButton>
+          <GameButton viewStyle={Styles.buttonContainer} textStyle={Styles.buttonTextStyle} buttonText={third} id="third"> </GameButton>
+          <GameButton viewStyle={Styles.buttonContainer} textStyle={Styles.buttonTextStyle} buttonText={fourth} id="fourth"> </GameButton>
+        </View>
+  
+        <View style={Styles.operandButtonContainer}>
+          <OperandButton viewStyle={Styles.operandButtons} id={ACTIONABLE_ITEMS.ADD_DIGIT} textStyle={Styles.buttonTextStyle} buttonText={"+"} />
+          <OperandButton viewStyle={Styles.operandButtons} id={ACTIONABLE_ITEMS.SUBTRACT_DIGIT} textStyle={Styles.buttonTextStyle} buttonText={"-"} />
+          <OperandButton viewStyle={Styles.operandButtons} id={ACTIONABLE_ITEMS.DIVIDE_DIGIT} textStyle={Styles.buttonTextStyle} buttonText={"/"} />
+          <OperandButton viewStyle={Styles.operandButtons} id={ACTIONABLE_ITEMS.MULTIPLY_DIGIT} textStyle={Styles.buttonTextStyle} buttonText={"X"} />
+          <EqualsButton viewStyle={Styles.operandButtons} id="equals" textStyle={Styles.buttonTextStyle} buttonText="=" />
+        </View>
+  
+        {/* </Text> */}
+      </SafeAreaView>
+    );
+  }
 }
 export default Homescreen
 
