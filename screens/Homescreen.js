@@ -78,11 +78,12 @@ export function equals(){
 }
 
 class Homescreen extends React.Component {
-  constructor() {
-    super();
-    state = {
-      opacity: 0
-    }
+  constructor(props) {
+    super(props);
+    //Why does changing the state ruin everyhing
+    this.state = {
+      counter: 0
+    };
   }
   
   componentDidMount() {
