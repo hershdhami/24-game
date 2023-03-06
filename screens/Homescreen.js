@@ -42,21 +42,6 @@ var final;
 var thing;
 var thing1;
 
-export function operandf(name){
-  if(i == 0){
-    operand = name;
-    i = 1;
-    //document.getElementById(thing.id).disabled = true;
-  }
-}
-
-export function digitf(name, curr){
-  //if(curr !=  thing){
-    numbers[i] = name;
-    if(i == 0){thing = curr;}
-  //}
-}
-
 export function equals(){
   switch(operand){
     case "+":
@@ -82,8 +67,38 @@ class Homescreen extends React.Component {
     super(props);
     //Why does changing the state ruin everyhing
     this.state = {
-      counter: 0
+      firstButtonOpacity: 1,
+      secondButtonOpacity: 1,
+      thirdButtonOpacity: 1,
+      fourthButtonOpacity: 1
     };
+  }
+
+  digitEquivalent(name, curr) {
+    numbers[i] = name;
+    if(i == 0){thing = curr;}
+    this.setState({
+      ...this.state,
+      firstButtonOpacity: 0,
+    })
+  }
+
+  operandf(name){
+    if(i == 0){
+      operand = name;
+      i = 1;
+      //document.getElementById(thing.id).disabled = true;
+    }
+  }
+
+  resetOpacity() {
+    this.setState({
+      ...this.state,
+      firstButtonOpacity: 1,
+      secondButtonOpacity: 1,
+      thirdButtonOpacity: 1,
+      fourthButtonOpacity: 1
+    })
   }
   
   componentDidMount() {
@@ -94,6 +109,7 @@ class Homescreen extends React.Component {
   }
   
 
+  //Added the ability to remove a button's opacity
   render() {
     return (
       <SafeAreaView style={Styles.container}>
@@ -103,20 +119,25 @@ class Homescreen extends React.Component {
         */}
   
         <View style={Styles.mainGameContainer}> 
-          <Pressable id={"first"} activeOpacity={0.7} onPress={() => digitf(first, this)} style={Styles.buttonContainer}>
-            <Text style={Styles.buttonTextStyle}> {first} </Text>
-          </Pressable>
-          <GameButton viewStyle={Styles.buttonContainer} textStyle={Styles.buttonTextStyle} buttonText={second} id="second"> </GameButton>
-          <GameButton viewStyle={Styles.buttonContainer} textStyle={Styles.buttonTextStyle} buttonText={third} id="third"> </GameButton>
-          <GameButton viewStyle={Styles.buttonContainer} textStyle={Styles.buttonTextStyle} buttonText={fourth} id="fourth"> </GameButton>
+          
+          <GameButton whenClicked={() => this.digitEquivalent(first, this)} viewStyle={{...Styles.buttonContainer,
+                                                                              opacity: this.state.firstButtonOpacity}} textStyle={Styles.buttonTextStyle} buttonText={first} id="second"> </GameButton>
+          <GameButton whenClicked={() => this.digitEquivalent(second, this)} viewStyle={{...Styles.buttonContainer,
+                                                                              opacity: this.state.secondButtonOpacity}} textStyle={Styles.buttonTextStyle} buttonText={second} id="second"> </GameButton>
+          <GameButton whenClicked={() => this.digitEquivalent(third, this)} viewStyle={{...Styles.buttonContainer,
+                                                                              opacity: this.state.thirdButtonOpacity}} textStyle={Styles.buttonTextStyle} buttonText={third} id="third"> </GameButton>
+          <GameButton whenClicked={() => this.digitEquivalent(fourth, this)} viewStyle={{...Styles.buttonContainer,
+                                                                              opacity: this.state.fourthButtonOpacity}} textStyle={Styles.buttonTextStyle} buttonText={fourth} id="fourth"> </GameButton>
         </View>
   
         <View style={Styles.operandButtonContainer}>
-          <OperandButton viewStyle={Styles.operandButtons} id={ACTIONABLE_ITEMS.ADD_DIGIT} textStyle={Styles.buttonTextStyle} buttonText={"+"} />
-          <OperandButton viewStyle={Styles.operandButtons} id={ACTIONABLE_ITEMS.SUBTRACT_DIGIT} textStyle={Styles.buttonTextStyle} buttonText={"-"} />
-          <OperandButton viewStyle={Styles.operandButtons} id={ACTIONABLE_ITEMS.DIVIDE_DIGIT} textStyle={Styles.buttonTextStyle} buttonText={"/"} />
-          <OperandButton viewStyle={Styles.operandButtons} id={ACTIONABLE_ITEMS.MULTIPLY_DIGIT} textStyle={Styles.buttonTextStyle} buttonText={"X"} />
+          <OperandButton whenClicked={() => operandf("+")} viewStyle={Styles.operandButtons} id={ACTIONABLE_ITEMS.ADD_DIGIT} textStyle={Styles.buttonTextStyle} buttonText={"+"} />
+          <OperandButton whenClicked={() => operandf("-")} viewStyle={Styles.operandButtons} id={ACTIONABLE_ITEMS.SUBTRACT_DIGIT} textStyle={Styles.buttonTextStyle} buttonText={"-"} />
+          <OperandButton whenClicked={() => operandf("/")} viewStyle={Styles.operandButtons} id={ACTIONABLE_ITEMS.DIVIDE_DIGIT} textStyle={Styles.buttonTextStyle} buttonText={"/"} />
+          <OperandButton whenClicked={() => operandf("X")} viewStyle={Styles.operandButtons} id={ACTIONABLE_ITEMS.MULTIPLY_DIGIT} textStyle={Styles.buttonTextStyle} buttonText={"X"} />
           <EqualsButton viewStyle={Styles.operandButtons} id="equals" textStyle={Styles.buttonTextStyle} buttonText="=" />
+          <OperandButton whenClicked={() => this.resetOpacity()} viewStyle={Styles.operandButtons} id={ACTIONABLE_ITEMS.MULTIPLY_DIGIT} textStyle={Styles.buttonTextStyle} buttonText={"Back"} />
+          <OperandButton whenClicked={() => this.resetOpacity()} viewStyle={Styles.operandButtons} id={ACTIONABLE_ITEMS.MULTIPLY_DIGIT} textStyle={Styles.buttonTextStyle} buttonText={"For"} />
         </View>
   
         {/* </Text> */}
