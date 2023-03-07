@@ -28,42 +28,41 @@ export function dimBrightness(payload) {
   elem.style.backgroundColor("#718FBB")
 }
 
-let second = '' + Math.floor(Math.random() * 11);
-let third = '' + Math.floor(Math.random() * 11);
-let fourth = '' + Math.floor(Math.random() * 11);
 let numbers = ["0","0"];
 let i = 0;
 
 var operand;
 
-var final;
+// var final;
 
-var thing;
-var thing1;
+// var thing;
+// var thing1;
 
 var currentNumbers = new Set();
 var historicalQueue = [];
 var currentQueue = [];
 
-export function equals(){
-  switch(operand){
-    case "+":
-      final = Number(numbers[0]) + Number(numbers[1]);
-      break;
-    case "-":
-      final = numbers[0] - numbers[1];
-      break;
-    case "X":
-      final = numbers[0] * numbers[1];
-      break;
-    case "/":
-      final = numbers[0] / numbers[1];
-      break;
-  }
-  i=0;
-  console.log(numbers[0], numbers[1], final);
-  numbers = ["0","0"]
-}
+var counter = 0;
+
+// export function equals(){
+//   switch(operand){
+//     case "+":
+//       final = Number(numbers[0]) + Number(numbers[1]);
+//       break;
+//     case "-":
+//       final = numbers[0] - numbers[1];
+//       break;
+//     case "X":
+//       final = numbers[0] * numbers[1];
+//       break;
+//     case "/":
+//       final = numbers[0] / numbers[1];
+//       break;
+//   }
+//   i=0;
+//   console.log(numbers[0], numbers[1], final);
+//   numbers = ["0","0"]
+// }
 
 class Homescreen extends React.Component {
   constructor(props) {
@@ -79,6 +78,11 @@ class Homescreen extends React.Component {
       thirdButtonText: ('' + Math.floor(Math.random() * 11)),
       fourthButtonText: ('' + Math.floor(Math.random() * 11)),
     };
+    window.State = Object.assign({}, this.state);
+    // window.first = State.firstButtonText;
+    // window.second = State.secondButtonText;
+    // window.third = State.thirdButtonText;
+    // window.fourth = State.fourthButtonText;
   }
 
   isOperator(input) {
@@ -90,8 +94,8 @@ class Homescreen extends React.Component {
   }
 
   digitEquivalent(name, curr, id) {
+
     numbers[i] = name;
-    if(i == 0){thing = curr;}
     
     let lastQueueElement = currentQueue.length - 1;
     let buttonValue = id + " " + name;
@@ -113,46 +117,210 @@ class Homescreen extends React.Component {
       historicalQueue.push(buttonValue)
     }
 
+    let old = currentQueue[0];
+    console.log(old);
+
     if (currentQueue.length == 3) {
-      let doubleStringOne = currentQueue[0].split(" ");
-      let doubleStringTwo = currentQueue[2].split(" ");
-      newNumber = parseInt(doubleStringOne[1]) + parseInt(doubleStringTwo[1]);
+      var doubleStringOne = currentQueue[0].split(" ");
+      var doubleStringTwo = currentQueue[2].split(" ");
+
+      var num1 = Number(doubleStringOne[1]);
+      var num2 = Number(doubleStringTwo[1]);
+
+      switch(currentQueue[1]){
+        case "+":
+          newNumber = num1 + num2;
+          break;
+        case "-":
+          newNumber = num1 - num2;
+          break;
+        case "*":
+          newNumber = num1 * num2;
+          break;
+        case "/":
+          newNumber = num1 / num2;
+          break;
+      }
       console.log("This is the newNumber: " + newNumber);
       id = doubleStringOne[0];
       shouldChange = true
 
       updateButtonText = doubleStringTwo[0];
 
-      this.state.thirdButtonText
-
+      //this.state.thirdButtonText
       currentQueue = [];
     }
 
     if (shouldChange) {
-      switch(id){
+      switch(doubleStringOne[0]){
+        case "first":
+          switch(doubleStringTwo[0]){
+            case "second":
+              this.setState({
+                ...this.state,
+                secondButtonText: '' + newNumber,
+                firstButtonOpacity: 0,
+              })
+            break;
+            case "third":
+              this.setState({
+                ...this.state,
+                thirdButtonText: '' + newNumber,
+                firstButtonOpacity: 0,
+              })
+            break;
+            case "fourth":
+              this.setState({
+                ...this.state,
+                fourthButtonText: '' + newNumber,
+                firstButtonOpacity: 0,
+              })
+            break;
+          }
+          break;
+        case "second":
+          switch(doubleStringTwo[0]){
+            case "first":
+              this.setState({
+                ...this.state,
+                firstButtonText: '' + newNumber,
+                secondButtonOpacity: 0,
+              })
+            break;
+
+            case "third":
+              this.setState({
+                ...this.state,
+                thirdButtonText: '' + newNumber,
+                secondButtonOpacity: 0,
+              })
+            break;
+
+            case "fourth":
+              this.setState({
+                ...this.state,
+                fourthButtonText: '' + newNumber,
+                secondButtonOpacity: 0,
+              })
+            break;
+          }
+
+          break;
+        case "third":
+          switch(doubleStringTwo[0]){
+            case "first":
+              this.setState({
+                ...this.state,
+                firstButtonText: '' + newNumber,
+                thirdButtonOpacity: 0,
+              })
+            break;
+
+            case "second":
+              this.setState({
+                ...this.state,
+                secondButtonText: '' + newNumber,
+                thirdButtonOpacity: 0,
+              })
+            break;
+
+            case "fourth":
+              this.setState({
+                ...this.state,
+                fourthButtonText: '' + newNumber,
+                thirdButtonOpacity: 0,
+              })
+            break;
+          }
+
+          break;
+        case "fourth":
+          switch(doubleStringTwo[0]){
+            case "first":
+              this.setState({
+                ...this.state,
+                firstButtonText: '' + newNumber,
+                fourthButtonOpacity: 0,
+              })
+            break;
+
+            case "second":
+              this.setState({
+                ...this.state,
+                secondButtonText: '' + newNumber,
+                fourthButtonOpacity: 0,
+              })
+            break;
+
+            case "third":
+              this.setState({
+                ...this.state,
+                thirdButtonText: '' + newNumber,
+                fourthButtonOpacity: 0,
+              })
+            break;
+          }
+
+          break;
+      }
+      counter++;
+      if(counter == 3){
+        console.log("we are done :) time to check");
+      }
+    }
+    else{
+      let prev = old.split(" ");
+
+      switch(prev[0]){
         case "first":
           this.setState({
             ...this.state,
-            firstButtonOpacity: 0,
-            thirdButtonText: '' + newNumber,
+            firstButtonOpacity: 0.7,
           })
           break;
         case "second":
           this.setState({
             ...this.state,
-            secondButtonOpacity: 0,
+            secondButtonOpacity: 0.7,
           })
           break;
         case "third":
           this.setState({
             ...this.state,
-            thirdButtonOpacity: 0,
+            thirdButtonOpacity: 0.7,
           })
           break;
         case "fourth":
           this.setState({
             ...this.state,
-            fourthButtonOpacity: 0,
+            fourthButtonOpacity: 0.7,
+          })
+          break; 
+      }
+
+      switch(id){
+        case "first":
+          this.setState({
+            ...this.state,
+            firstButtonOpacity: 0.3,
+          })
+          break;
+        case "second":
+          this.setState({
+            ...this.state,
+            secondButtonOpacity: 0.3,
+          })
+          break;
+        case "third":
+          this.setState({
+            ...this.state,
+            thirdButtonOpacity: 0.3,
+          })
+          break;
+        case "fourth":
+          this.setState({
+            ...this.state,
+            fourthButtonOpacity: 0.3,
           })
           break;
       }
@@ -170,7 +338,6 @@ class Homescreen extends React.Component {
     if(i == 0){
       operand = name;
       i = 1;
-      //document.getElementById(thing.id).disabled = true;
     }
     
     if (!currentQueue.includes(name) && lastQueueElement >= 0) {
@@ -181,12 +348,20 @@ class Homescreen extends React.Component {
   }
 
   resetOpacity() {
+    // State.firstButtonText = first;
+    // State.secondButtonText = second;
+    // State.thirdButtonText = third;
+    // State.fourthButtonText = fourth;
+    
+    //keep track of of numbers and their position both changed and removed in a stack and pop for back 
+    //counter -= 1
+    //also make sure that buttons set to 0 opacity 0 are also set to unclickable
     this.setState({
       ...this.state,
       firstButtonOpacity: 1,
       secondButtonOpacity: 1,
       thirdButtonOpacity: 1,
-      fourthButtonOpacity: 1
+      fourthButtonOpacity: 1,
     })
   }
   
