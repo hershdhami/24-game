@@ -28,7 +28,6 @@ export function dimBrightness(payload) {
   elem.style.backgroundColor("#718FBB")
 }
 
-let first = '' + Math.floor(Math.random() * 11);
 let second = '' + Math.floor(Math.random() * 11);
 let third = '' + Math.floor(Math.random() * 11);
 let fourth = '' + Math.floor(Math.random() * 11);
@@ -41,6 +40,10 @@ var final;
 
 var thing;
 var thing1;
+
+var currentNumbers = new Set();
+var historicalQueue = [];
+var currentQueue = [];
 
 export function equals(){
   switch(operand){
@@ -70,24 +73,110 @@ class Homescreen extends React.Component {
       firstButtonOpacity: 1,
       secondButtonOpacity: 1,
       thirdButtonOpacity: 1,
-      fourthButtonOpacity: 1
+      fourthButtonOpacity: 1,
+      firstButtonText: ('' + Math.floor(Math.random() * 11)),
+      secondButtonText: ('' + Math.floor(Math.random() * 11)),
+      thirdButtonText: ('' + Math.floor(Math.random() * 11)),
+      fourthButtonText: ('' + Math.floor(Math.random() * 11)),
     };
   }
 
-  digitEquivalent(name, curr) {
+  isOperator(input) {
+    if (input == '%' || input == '/' || input == '*' || input == '+' || input == '-'){
+        return true;
+    } else{
+        return false;
+    }
+  }
+
+  digitEquivalent(name, curr, id) {
     numbers[i] = name;
     if(i == 0){thing = curr;}
-    this.setState({
-      ...this.state,
-      firstButtonOpacity: 0,
-    })
+    
+    let lastQueueElement = currentQueue.length - 1;
+    let buttonValue = id + " " + name;
+    var newNumber = 0;
+    var shouldChange = false;
+    var updateButtonText;
+
+    currentNumbers.add(buttonValue);
+
+    if (lastQueueElement < 0) {
+      currentQueue.push(buttonValue)
+    } else if (!currentQueue.includes(buttonValue) && lastQueueElement >= 0) {
+      if (this.isOperator(currentQueue[lastQueueElement])) {
+        currentQueue.push(buttonValue)
+      }
+    }
+
+    if (!historicalQueue.includes(buttonValue)) {
+      historicalQueue.push(buttonValue)
+    }
+
+    if (currentQueue.length == 3) {
+      let doubleStringOne = currentQueue[0].split(" ");
+      let doubleStringTwo = currentQueue[2].split(" ");
+      newNumber = parseInt(doubleStringOne[1]) + parseInt(doubleStringTwo[1]);
+      console.log("This is the newNumber: " + newNumber);
+      id = doubleStringOne[0];
+      shouldChange = true
+
+      updateButtonText = doubleStringTwo[0];
+
+      this.state.thirdButtonText
+
+      currentQueue = [];
+    }
+
+    if (shouldChange) {
+      switch(id){
+        case "first":
+          this.setState({
+            ...this.state,
+            firstButtonOpacity: 0,
+            thirdButtonText: '' + newNumber,
+          })
+          break;
+        case "second":
+          this.setState({
+            ...this.state,
+            secondButtonOpacity: 0,
+          })
+          break;
+        case "third":
+          this.setState({
+            ...this.state,
+            thirdButtonOpacity: 0,
+          })
+          break;
+        case "fourth":
+          this.setState({
+            ...this.state,
+            fourthButtonOpacity: 0,
+          })
+          break;
+      }
+    }
+    
+    console.log(currentNumbers);
+    console.log(currentNumbers.size);
+    console.log(currentQueue);
+    console.log(currentQueue.length);
   }
 
   operandf(name){
+    let lastQueueElement = currentQueue.length - 1;
+
     if(i == 0){
       operand = name;
       i = 1;
       //document.getElementById(thing.id).disabled = true;
+    }
+    
+    if (!currentQueue.includes(name) && lastQueueElement >= 0) {
+      if (!this.isOperator(currentQueue[lastQueueElement])) {
+        currentQueue.push(name)
+      }
     }
   }
 
@@ -120,21 +209,21 @@ class Homescreen extends React.Component {
   
         <View style={Styles.mainGameContainer}> 
           
-          <GameButton whenClicked={() => this.digitEquivalent(first, this)} viewStyle={{...Styles.buttonContainer,
-                                                                              opacity: this.state.firstButtonOpacity}} textStyle={Styles.buttonTextStyle} buttonText={first} id="second"> </GameButton>
-          <GameButton whenClicked={() => this.digitEquivalent(second, this)} viewStyle={{...Styles.buttonContainer,
-                                                                              opacity: this.state.secondButtonOpacity}} textStyle={Styles.buttonTextStyle} buttonText={second} id="second"> </GameButton>
-          <GameButton whenClicked={() => this.digitEquivalent(third, this)} viewStyle={{...Styles.buttonContainer,
-                                                                              opacity: this.state.thirdButtonOpacity}} textStyle={Styles.buttonTextStyle} buttonText={third} id="third"> </GameButton>
-          <GameButton whenClicked={() => this.digitEquivalent(fourth, this)} viewStyle={{...Styles.buttonContainer,
-                                                                              opacity: this.state.fourthButtonOpacity}} textStyle={Styles.buttonTextStyle} buttonText={fourth} id="fourth"> </GameButton>
+          <GameButton whenClicked={() => this.digitEquivalent(this.state.firstButtonText, this, "first")} viewStyle={{...Styles.buttonContainer,
+                                                                              opacity: this.state.firstButtonOpacity}} textStyle={Styles.buttonTextStyle} buttonText={this.state.firstButtonText} id="first"> </GameButton>
+          <GameButton whenClicked={() => this.digitEquivalent(this.state.secondButtonText, this, "second")} viewStyle={{...Styles.buttonContainer,
+                                                                              opacity: this.state.secondButtonOpacity}} textStyle={Styles.buttonTextStyle} buttonText={this.state.secondButtonText} id="second"> </GameButton>
+          <GameButton whenClicked={() => this.digitEquivalent(this.state.thirdButtonText, this, "third")} viewStyle={{...Styles.buttonContainer,
+                                                                              opacity: this.state.thirdButtonOpacity}} textStyle={Styles.buttonTextStyle} buttonText={this.state.thirdButtonText} id="third"> </GameButton>
+          <GameButton whenClicked={() => this.digitEquivalent(this.state.fourthButtonText, this, "fourth")} viewStyle={{...Styles.buttonContainer,
+                                                                              opacity: this.state.fourthButtonOpacity}} textStyle={Styles.buttonTextStyle} buttonText={this.state.fourthButtonText} id="fourth"> </GameButton>
         </View>
   
         <View style={Styles.operandButtonContainer}>
-          <OperandButton whenClicked={() => operandf("+")} viewStyle={Styles.operandButtons} id={ACTIONABLE_ITEMS.ADD_DIGIT} textStyle={Styles.buttonTextStyle} buttonText={"+"} />
-          <OperandButton whenClicked={() => operandf("-")} viewStyle={Styles.operandButtons} id={ACTIONABLE_ITEMS.SUBTRACT_DIGIT} textStyle={Styles.buttonTextStyle} buttonText={"-"} />
-          <OperandButton whenClicked={() => operandf("/")} viewStyle={Styles.operandButtons} id={ACTIONABLE_ITEMS.DIVIDE_DIGIT} textStyle={Styles.buttonTextStyle} buttonText={"/"} />
-          <OperandButton whenClicked={() => operandf("X")} viewStyle={Styles.operandButtons} id={ACTIONABLE_ITEMS.MULTIPLY_DIGIT} textStyle={Styles.buttonTextStyle} buttonText={"X"} />
+          <OperandButton whenClicked={() => this.operandf("+")} viewStyle={Styles.operandButtons} id={ACTIONABLE_ITEMS.ADD_DIGIT} textStyle={Styles.buttonTextStyle} buttonText={"+"} />
+          <OperandButton whenClicked={() => this.operandf("-")} viewStyle={Styles.operandButtons} id={ACTIONABLE_ITEMS.SUBTRACT_DIGIT} textStyle={Styles.buttonTextStyle} buttonText={"-"} />
+          <OperandButton whenClicked={() => this.operandf("/")} viewStyle={Styles.operandButtons} id={ACTIONABLE_ITEMS.DIVIDE_DIGIT} textStyle={Styles.buttonTextStyle} buttonText={"/"} />
+          <OperandButton whenClicked={() => this.operandf("*")} viewStyle={Styles.operandButtons} id={ACTIONABLE_ITEMS.MULTIPLY_DIGIT} textStyle={Styles.buttonTextStyle} buttonText={"X"} />
           <EqualsButton viewStyle={Styles.operandButtons} id="equals" textStyle={Styles.buttonTextStyle} buttonText="=" />
           <OperandButton whenClicked={() => this.resetOpacity()} viewStyle={Styles.operandButtons} id={ACTIONABLE_ITEMS.MULTIPLY_DIGIT} textStyle={Styles.buttonTextStyle} buttonText={"Back"} />
           <OperandButton whenClicked={() => this.resetOpacity()} viewStyle={Styles.operandButtons} id={ACTIONABLE_ITEMS.MULTIPLY_DIGIT} textStyle={Styles.buttonTextStyle} buttonText={"For"} />
