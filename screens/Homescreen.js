@@ -40,6 +40,7 @@ var operand;
 
 var currentNumbers = new Set();
 var historicalQueue = [];
+var historicalStates = [];
 var currentQueue = [];
 
 var counter = 0;
@@ -73,10 +74,10 @@ class Homescreen extends React.Component {
       secondButtonOpacity: 1,
       thirdButtonOpacity: 1,
       fourthButtonOpacity: 1,
-      firstButtonText: ('' + Math.floor(Math.random() * 11)),
-      secondButtonText: ('' + Math.floor(Math.random() * 11)),
-      thirdButtonText: ('' + Math.floor(Math.random() * 11)),
-      fourthButtonText: ('' + Math.floor(Math.random() * 11)),
+      firstButtonText: ('' + (Math.floor(Math.random() * 10) + 1)),
+      secondButtonText: ('' + (Math.floor(Math.random() * 10) + 1)),
+      thirdButtonText: ('' + (Math.floor(Math.random() * 10) + 1)),
+      fourthButtonText: ('' + (Math.floor(Math.random() * 10) + 1)),
     };
     window.State = Object.assign({}, this.state);
     // window.first = State.firstButtonText;
@@ -107,16 +108,14 @@ class Homescreen extends React.Component {
 
     if (lastQueueElement < 0) {
       currentQueue.push(buttonValue)
-    } else if (!currentQueue.includes(buttonValue) && lastQueueElement >= 0) {
+    } else if (!currentQueue.includes(buttonValue) || !this.isOperator(currentQueue[lastQueueElement])) {
       if (this.isOperator(currentQueue[lastQueueElement])) {
         currentQueue.push(buttonValue)
+      } else {
+        currentQueue[lastQueueElement] = buttonValue
       }
     }
-
-    if (!historicalQueue.includes(buttonValue)) {
-      historicalQueue.push(buttonValue)
-    }
-
+    
     let old = currentQueue[0];
     console.log(old);
 
@@ -145,191 +144,120 @@ class Homescreen extends React.Component {
       id = doubleStringOne[0];
       shouldChange = true
 
-      updateButtonText = doubleStringTwo[0];
+      
+      updateButtonText = doubleStringTwo[0] + "ButtonText";
 
       //this.state.thirdButtonText
       currentQueue = [];
     }
 
+    if (newNumber < 0) {return};
+
     if (shouldChange) {
-      switch(doubleStringOne[0]){
+      if (!historicalQueue.includes(this.state)) {
+        historicalStates.push(this.state);
+      }
+
+      switch(id) {
         case "first":
-          switch(doubleStringTwo[0]){
-            case "second":
-              this.setState({
-                ...this.state,
-                secondButtonText: '' + newNumber,
-                firstButtonOpacity: 0,
-              })
-            break;
-            case "third":
-              this.setState({
-                ...this.state,
-                thirdButtonText: '' + newNumber,
-                firstButtonOpacity: 0,
-              })
-            break;
-            case "fourth":
-              this.setState({
-                ...this.state,
-                fourthButtonText: '' + newNumber,
-                firstButtonOpacity: 0,
-              })
-            break;
-          }
+          this.setState({
+            ...this.state,
+            [updateButtonText]: '' + newNumber,
+            firstButtonOpacity: 0,
+          })
           break;
         case "second":
-          switch(doubleStringTwo[0]){
-            case "first":
-              this.setState({
-                ...this.state,
-                firstButtonText: '' + newNumber,
-                secondButtonOpacity: 0,
-              })
-            break;
-
-            case "third":
-              this.setState({
-                ...this.state,
-                thirdButtonText: '' + newNumber,
-                secondButtonOpacity: 0,
-              })
-            break;
-
-            case "fourth":
-              this.setState({
-                ...this.state,
-                fourthButtonText: '' + newNumber,
-                secondButtonOpacity: 0,
-              })
-            break;
-          }
-
+          this.setState({
+            ...this.state,
+            [updateButtonText]: '' + newNumber,
+            secondButtonOpacity: 0,
+          })
           break;
         case "third":
-          switch(doubleStringTwo[0]){
-            case "first":
-              this.setState({
-                ...this.state,
-                firstButtonText: '' + newNumber,
-                thirdButtonOpacity: 0,
-              })
-            break;
-
-            case "second":
-              this.setState({
-                ...this.state,
-                secondButtonText: '' + newNumber,
-                thirdButtonOpacity: 0,
-              })
-            break;
-
-            case "fourth":
-              this.setState({
-                ...this.state,
-                fourthButtonText: '' + newNumber,
-                thirdButtonOpacity: 0,
-              })
-            break;
-          }
-
+          this.setState({
+            ...this.state,
+            [updateButtonText]: '' + newNumber,
+            thirdButtonOpacity: 0,
+          })
           break;
         case "fourth":
-          switch(doubleStringTwo[0]){
-            case "first":
-              this.setState({
-                ...this.state,
-                firstButtonText: '' + newNumber,
-                fourthButtonOpacity: 0,
-              })
-            break;
-
-            case "second":
-              this.setState({
-                ...this.state,
-                secondButtonText: '' + newNumber,
-                fourthButtonOpacity: 0,
-              })
-            break;
-
-            case "third":
-              this.setState({
-                ...this.state,
-                thirdButtonText: '' + newNumber,
-                fourthButtonOpacity: 0,
-              })
-            break;
-          }
-
+          this.setState({
+            ...this.state,
+            [updateButtonText]: '' + newNumber,
+            fourthButtonOpacity: 0,
+          })
           break;
       }
       counter++;
       if(counter == 3){
         console.log("we are done :) time to check");
       }
-    }
-    else{
-      let prev = old.split(" ");
+     }
+    // else{
+    //   let prev = old.split(" ");
 
-      switch(prev[0]){
-        case "first":
-          this.setState({
-            ...this.state,
-            firstButtonOpacity: 0.7,
-          })
-          break;
-        case "second":
-          this.setState({
-            ...this.state,
-            secondButtonOpacity: 0.7,
-          })
-          break;
-        case "third":
-          this.setState({
-            ...this.state,
-            thirdButtonOpacity: 0.7,
-          })
-          break;
-        case "fourth":
-          this.setState({
-            ...this.state,
-            fourthButtonOpacity: 0.7,
-          })
-          break; 
-      }
+    //   switch(prev[0]){
+    //     case "first":
+    //       this.setState({
+    //         ...this.state,
+    //         firstButtonOpacity: 0.7,
+    //       })
+    //       break;
+    //     case "second":
+    //       this.setState({
+    //         ...this.state,
+    //         secondButtonOpacity: 0.7,
+    //       })
+    //       break;
+    //     case "third":
+    //       this.setState({
+    //         ...this.state,
+    //         thirdButtonOpacity: 0.7,
+    //       })
+    //       break;
+    //     case "fourth":
+    //       this.setState({
+    //         ...this.state,
+    //         fourthButtonOpacity: 0.7,
+    //       })
+    //       break; 
+    //   }
 
-      switch(id){
-        case "first":
-          this.setState({
-            ...this.state,
-            firstButtonOpacity: 0.3,
-          })
-          break;
-        case "second":
-          this.setState({
-            ...this.state,
-            secondButtonOpacity: 0.3,
-          })
-          break;
-        case "third":
-          this.setState({
-            ...this.state,
-            thirdButtonOpacity: 0.3,
-          })
-          break;
-        case "fourth":
-          this.setState({
-            ...this.state,
-            fourthButtonOpacity: 0.3,
-          })
-          break;
-      }
-    }
+    //   switch(id){
+    //     case "first":
+    //       this.setState({
+    //         ...this.state,
+    //         firstButtonOpacity: 0.3,
+    //       })
+    //       break;
+    //     case "second":
+    //       this.setState({
+    //         ...this.state,
+    //         secondButtonOpacity: 0.3,
+    //       })
+    //       break;
+    //     case "third":
+    //       this.setState({
+    //         ...this.state,
+    //         thirdButtonOpacity: 0.3,
+    //       })
+    //       break;
+    //     case "fourth":
+    //       this.setState({
+    //         ...this.state,
+    //         fourthButtonOpacity: 0.3,
+    //       })
+    //       break;
+    //   }
+    // }
     
     console.log(currentNumbers);
     console.log(currentNumbers.size);
     console.log(currentQueue);
     console.log(currentQueue.length);
+
+    console.log("------------STATE ARRAY---------------");
+    console.log(historicalStates);
   }
 
   operandf(name){
@@ -356,13 +284,13 @@ class Homescreen extends React.Component {
     //keep track of of numbers and their position both changed and removed in a stack and pop for back 
     //counter -= 1
     //also make sure that buttons set to 0 opacity 0 are also set to unclickable
-    this.setState({
-      ...this.state,
-      firstButtonOpacity: 1,
-      secondButtonOpacity: 1,
-      thirdButtonOpacity: 1,
-      fourthButtonOpacity: 1,
-    })
+    let lastQueueElement = historicalStates.length - 1;
+
+    this.setState(
+      historicalStates[lastQueueElement]
+    )
+
+    historicalStates.pop();
   }
   
   componentDidMount() {
@@ -399,9 +327,7 @@ class Homescreen extends React.Component {
           <OperandButton whenClicked={() => this.operandf("-")} viewStyle={Styles.operandButtons} id={ACTIONABLE_ITEMS.SUBTRACT_DIGIT} textStyle={Styles.buttonTextStyle} buttonText={"-"} />
           <OperandButton whenClicked={() => this.operandf("/")} viewStyle={Styles.operandButtons} id={ACTIONABLE_ITEMS.DIVIDE_DIGIT} textStyle={Styles.buttonTextStyle} buttonText={"/"} />
           <OperandButton whenClicked={() => this.operandf("*")} viewStyle={Styles.operandButtons} id={ACTIONABLE_ITEMS.MULTIPLY_DIGIT} textStyle={Styles.buttonTextStyle} buttonText={"X"} />
-          <EqualsButton viewStyle={Styles.operandButtons} id="equals" textStyle={Styles.buttonTextStyle} buttonText="=" />
           <OperandButton whenClicked={() => this.resetOpacity()} viewStyle={Styles.operandButtons} id={ACTIONABLE_ITEMS.MULTIPLY_DIGIT} textStyle={Styles.buttonTextStyle} buttonText={"Back"} />
-          <OperandButton whenClicked={() => this.resetOpacity()} viewStyle={Styles.operandButtons} id={ACTIONABLE_ITEMS.MULTIPLY_DIGIT} textStyle={Styles.buttonTextStyle} buttonText={"For"} />
         </View>
   
         {/* </Text> */}
@@ -451,7 +377,7 @@ const Styles = StyleSheet.create({
     flexWrap: "wrap",
   },
   operandButtons: {
-    width: "20%",
+    width: "24%",
     height: "50%",
     alignContent: "center",
     justifyContent: "center",
@@ -482,20 +408,6 @@ const Styles = StyleSheet.create({
 });
 
 /*
-<View className='pl-1 pt-4 pb-8 items-center mx-4 space-x-1.5'>
-          <Text className='text-center font-bold'>
-            24-Game
-          </Text>
-        </View>
-
-        <View style={Styles.second}> 
-        <Pressable>
-          <Text style={Styles.textCss}> 4 </Text>
-        </Pressable>
-      </View>
-*/
-
-/*
 <Image 
             source={{
               url: 'https://links.papareact.com/wru'
@@ -507,35 +419,4 @@ const Styles = StyleSheet.create({
           />
 
           {/*This means that this view will take up most of the room*//*}
-/*
-          <View className='flex-1'>
-              <Text className='font-bold text-gray-400 text-xs pt-1'>Deliver Now!</Text>
-              <Text className='font-bold text-xl'>Current Location
-              <ChevronDownIcon size={20} colors="#00CCBB" />
-              </Text>
-          </View>
-          
-          <UserIcon size={35} color="#00CCBB" />
-
-          <DigitButton digit={Math.floor(Math.random() * 11)} />
-            <DigitButton digit={Math.floor(Math.random() * 11)} />
-            <DigitButton digit={Math.floor(Math.random() * 11)} />
-            <DigitButton digit={Math.floor(Math.random() * 11)} />
-            <OperandButton operation={"+"} />
-            <OperandButton operation={"-"} />
-            <OperandButton operation={"x"} />
-            <OperandButton operation={"/"} />
-*/
-
-/*
-
-<FlatList className='text-xl'
-            data={dataSource}
-            renderItem={({item}) => (
-              <DigitButton className='text-xl' digit={item.src} />
-            )}
-            numColumns={4}
-            keyExtractor={(item, index) => index}
-          />
-
 */

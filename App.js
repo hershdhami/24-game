@@ -6,13 +6,15 @@ import Homescreen from './screens/Homescreen';
 const Stack = createNativeStackNavigator();
 
 import React from 'react';
+import MainMenu from './screens/MainMenu';
 
 export default class App extends React.Component {
   render() {
       return (
       <NavigationContainer>
         <TailwindProvider>
-          <Stack.Navigator>
+          <Stack.Navigator
+            initialRouteName="24 GAME">
             <Stack.Screen name ="24 GAME" 
                           options={{headerStyle: { backgroundColor: '#483d8b', },
                                     headerTintColor: '#fff',
@@ -22,6 +24,7 @@ export default class App extends React.Component {
                                     },
                                     headerTitleAlign: 'center'}} 
                           component={Homescreen} />
+            <Stack.Screen name = "MainMenu" navigation={this.navigation} options={{headerShown: false}} component={MainMenu} />
           </Stack.Navigator>
         </TailwindProvider>
       </NavigationContainer>
