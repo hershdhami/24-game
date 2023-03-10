@@ -1,30 +1,19 @@
 import { SafeAreaView } from "react-native-safe-area-context";
 import { View, Text } from "react-native";
 import { StyleSheet } from "react-native";
-import Pressable from "./Pressable";
+import { Pressable } from "react-native";
 import React from "react";
-import getNavigation from "./EqualsButton";
 
-class MainMenu extends React.Component {
-    constructor(props) {
-      super(props);
-    }
-
-    toHomeScreen() {
-        console.log("Im Alive")
-    }
-
-    render() {
-        return(
-            <SafeAreaView style={Styles.container}>
-                <View style={Styles.mainGameContainer}>
-                    <Pressable style={Styles.buttonContainer} onPress={this.toHomeScreen()}>
-                        <Text style={Styles.buttonTextStyle}> CLICK ME </Text>
-                    </Pressable>
-                </View>
-            </SafeAreaView>
-        )
-    }
+const MainMenu = ({ navigation }) => {
+    return(
+    <SafeAreaView style={Styles.container}>
+        <View style={Styles.mainGameContainer}>
+            <Pressable style={Styles.buttonContainer} onPress={() => navigation.navigate("24 GAME")}>
+                <Text style={Styles.buttonTextStyle}> CLICK ME </Text>
+            </Pressable>
+        </View>
+    </SafeAreaView>
+    )
 }
 
 export default MainMenu
