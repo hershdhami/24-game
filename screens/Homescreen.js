@@ -32,38 +32,12 @@ let numbers = ["0","0"];
 let i = 0;
 
 var operand;
-
-// var final;
-
-// var thing;
-// var thing1;
-
 var currentNumbers = new Set();
 var historicalQueue = [];
 var historicalStates = [];
 var currentQueue = [];
 
 var counter = 0;
-
-// export function equals(){
-//   switch(operand){
-//     case "+":
-//       final = Number(numbers[0]) + Number(numbers[1]);
-//       break;
-//     case "-":
-//       final = numbers[0] - numbers[1];
-//       break;
-//     case "X":
-//       final = numbers[0] * numbers[1];
-//       break;
-//     case "/":
-//       final = numbers[0] / numbers[1];
-//       break;
-//   }
-//   i=0;
-//   console.log(numbers[0], numbers[1], final);
-//   numbers = ["0","0"]
-// }
 
 class Homescreen extends React.Component {
   constructor(props) {
@@ -99,7 +73,7 @@ class Homescreen extends React.Component {
     numbers[i] = name;
     
     let lastQueueElement = currentQueue.length - 1;
-    let buttonValue = id + " " + name;
+    var buttonValue = id + " " + name;
     var newNumber = 0;
     var shouldChange = false;
     var updateButtonText;
@@ -117,7 +91,6 @@ class Homescreen extends React.Component {
     }
     
     let old = currentQueue[0];
-    console.log(old);
 
     if (currentQueue.length == 3) {
       var doubleStringOne = currentQueue[0].split(" ");
@@ -144,11 +117,9 @@ class Homescreen extends React.Component {
       id = doubleStringOne[0];
       shouldChange = true
 
-      
       updateButtonText = doubleStringTwo[0] + "ButtonText";
-
-      //this.state.thirdButtonText
-      currentQueue = [];
+      buttonValue = doubleStringTwo[0] + " " + newNumber.toString()
+      currentQueue = [buttonValue];
     }
 
     if (newNumber < 0) {return};
@@ -260,6 +231,63 @@ class Homescreen extends React.Component {
     console.log(historicalStates);
   }
 
+  judgePoint24(numsList) {
+    var shouldChange = false;
+    var nums = numsList;
+
+    while (!shouldChange) {
+      for (let a = 0; a < 4; a++) {
+        for(let b = 0; b < 4; b++) {
+          if (a != b) {
+            for(let c = 0; c < 4; c++) {
+              if (a != c && b!= c) {
+                for(let d = 0; d < 4; d++) {
+                  if (a != d && b != d && c != d) {
+                    if(this.v1(Number(nums[a]),Number(nums[b]),Number(nums[c]),Number(nums[d]))) {
+                      return;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+  
+      this.setState({
+        ...this.state,
+        firstButtonText: ('' + (Math.floor(Math.random() * 10) + 1)),
+        secondButtonText: ('' + (Math.floor(Math.random() * 10) + 1)),
+        thirdButtonText: ('' + (Math.floor(Math.random() * 10) + 1)),
+        fourthButtonText: ('' + (Math.floor(Math.random() * 10) + 1)),
+      })
+
+      nums = [Number(firstButtonText),Number(secondButtonText),Number(thirdButtonText),Number(fourthButtonText)]
+    }
+  }
+
+  v1(a, b, c ,d) {
+    if (this.v2(a+b,c,d) || this.v2(a-b,c,d) || this.v2(a*b,c,d) || this.v2(a/b,c,d)) return true;
+    if (this.v2(a,b+c,d) || this.v2(a,b-c,d) || this.v2(a,b*c,d) || this.v2(a,b/c,d)) return true;
+    if (this.v2(a,b,c+d) || this.v2(a,b,c-d) || this.v2(a,b,c*d) || this.v2(a,b,c/d)) return true;
+  }
+
+  v2(x,b,c) {
+    if (this.v3(x+b,c) || this.v3(x-b,c) || this.v3(x*b,c) || this.v3(x/b,c)) return true;
+    if (this.v3(x,b+c) || this.v3(x,b-c) || this.v3(x,b*c) || this.v3(x,b/c)) return true;
+  }
+
+  v3(x,y) {
+    if (this.ansFinder(x+y) || this.ansFinder(x-y) || this.ansFinder(x*y) || this.ansFinder(x/y)) return true;
+  }
+
+  ansFinder(x) {
+    if (Math.abs(x) < 0.01) {
+      return true;
+    }
+    return false;
+  }
+
   operandf(name){
     let lastQueueElement = currentQueue.length - 1;
 
@@ -276,14 +304,8 @@ class Homescreen extends React.Component {
   }
 
   resetOpacity() {
-    // State.firstButtonText = first;
-    // State.secondButtonText = second;
-    // State.thirdButtonText = third;
-    // State.fourthButtonText = fourth;
-    
-    //keep track of of numbers and their position both changed and removed in a stack and pop for back 
-    //counter -= 1
-    //also make sure that buttons set to 0 opacity 0 are also set to unclickable
+
+    //Code to Reload Old States
     let lastQueueElement = historicalStates.length - 1;
 
     this.setState(
@@ -294,10 +316,14 @@ class Homescreen extends React.Component {
   }
   
   componentDidMount() {
-    //Same as useLayoutEffect
+    //Same as useLayoutEffectr
+    let numberStates = [this.state.firstButtonText, this.state.secondButtonText, this.state.thirdButtonText, this.state.fourthButtonText]
+    this.judgePoint24(numberStates)
   }
+
   componentDidUpdate() {
     //Same as useLayoutEffect
+
   }
   
 
@@ -392,7 +418,6 @@ const Styles = StyleSheet.create({
     textAlign: "center"
   },
 
-  //Header CSS
   headerContainer: {
     height: 50,
     justifyContent: "space-evenly",
@@ -406,17 +431,3 @@ const Styles = StyleSheet.create({
     color: "white"
   }
 });
-
-/*
-<Image 
-            source={{
-              url: 'https://links.papareact.com/wru'
-            }}
-
-            //h-7: Height of 7
-            //w-7: WIdth of 7
-            className='h-8 w-8 bg-gray-200 p-4 rounded=full'
-          />
-
-          {/*This means that this view will take up most of the room*//*}
-*/

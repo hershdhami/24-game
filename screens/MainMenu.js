@@ -26,7 +26,7 @@ const Styles = StyleSheet.create({
     },
     mainGameContainer: {
       height: "25%",
-      top: "20%",
+      top: "55%",
       width: "60%",
       backgroundColor: "#d3d3d3",
       display: "flex",
