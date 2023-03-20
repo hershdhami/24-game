@@ -5,6 +5,8 @@ import Pressable from './Pressable'
 import GameButton from './GameButton'
 import OperandButton from './OperandButton'
 import EqualsButton from './EqualsButton'
+import IconButton from './IconButton'
+import WinningScreen from './WinningScreen'
 
 export const ACTIONABLE_ITEMS = {
   ADD_DIGIT: "add-digit",
@@ -42,7 +44,6 @@ var counter = 0;
 class Homescreen extends React.Component {
   constructor(props) {
     super(props);
-    //Why does changing the state ruin everyhing
     this.state = {
       firstButtonOpacity: 1,
       secondButtonOpacity: 1,
@@ -52,12 +53,9 @@ class Homescreen extends React.Component {
       secondButtonText: ('' + (Math.floor(Math.random() * 10) + 1)),
       thirdButtonText: ('' + (Math.floor(Math.random() * 10) + 1)),
       fourthButtonText: ('' + (Math.floor(Math.random() * 10) + 1)),
+      didWin: false,
     };
     window.State = Object.assign({}, this.state);
-    // window.first = State.firstButtonText;
-    // window.second = State.secondButtonText;
-    // window.third = State.thirdButtonText;
-    // window.fourth = State.fourthButtonText;
   }
 
   isOperator(input) {
@@ -76,6 +74,7 @@ class Homescreen extends React.Component {
     var buttonValue = id + " " + name;
     var newNumber = 0;
     var shouldChange = false;
+    var didUserWin = false;
     var updateButtonText;
 
     currentNumbers.add(buttonValue);
@@ -117,6 +116,10 @@ class Homescreen extends React.Component {
       id = doubleStringOne[0];
       shouldChange = true
 
+      if (newNumber == 24) {
+        didUserWin = true;
+      }
+
       updateButtonText = doubleStringTwo[0] + "ButtonText";
       buttonValue = doubleStringTwo[0] + " " + newNumber.toString()
       currentQueue = [buttonValue];
@@ -135,6 +138,7 @@ class Homescreen extends React.Component {
             ...this.state,
             [updateButtonText]: '' + newNumber,
             firstButtonOpacity: 0,
+            didWin: didUserWin,
           })
           break;
         case "second":
@@ -142,6 +146,7 @@ class Homescreen extends React.Component {
             ...this.state,
             [updateButtonText]: '' + newNumber,
             secondButtonOpacity: 0,
+            didWin: didUserWin,
           })
           break;
         case "third":
@@ -149,6 +154,7 @@ class Homescreen extends React.Component {
             ...this.state,
             [updateButtonText]: '' + newNumber,
             thirdButtonOpacity: 0,
+            didWin: didUserWin,
           })
           break;
         case "fourth":
@@ -156,6 +162,7 @@ class Homescreen extends React.Component {
             ...this.state,
             [updateButtonText]: '' + newNumber,
             fourthButtonOpacity: 0,
+            didWin: didUserWin,
           })
           break;
       }
@@ -260,6 +267,11 @@ class Homescreen extends React.Component {
         secondButtonText: ('' + (Math.floor(Math.random() * 10) + 1)),
         thirdButtonText: ('' + (Math.floor(Math.random() * 10) + 1)),
         fourthButtonText: ('' + (Math.floor(Math.random() * 10) + 1)),
+        didWin: false,
+        firstButtonOpacity: 1,
+        secondButtonOpacity: 1,
+        thirdButtonOpacity: 1,
+        fourthButtonOpacity: 1,
       })
 
       nums = [Number(firstButtonText),Number(secondButtonText),Number(thirdButtonText),Number(fourthButtonText)]
@@ -303,7 +315,7 @@ class Homescreen extends React.Component {
     }
   }
 
-  resetOpacity() {
+  goBack() {
 
     //Code to Reload Old States
     let lastQueueElement = historicalStates.length - 1;
@@ -326,6 +338,25 @@ class Homescreen extends React.Component {
 
   }
   
+  onModalClose() {
+    this.setState({
+      ...this.state,
+      firstButtonText: ('' + (Math.floor(Math.random() * 10) + 1)),
+      secondButtonText: ('' + (Math.floor(Math.random() * 10) + 1)),
+      thirdButtonText: ('' + (Math.floor(Math.random() * 10) + 1)),
+      fourthButtonText: ('' + (Math.floor(Math.random() * 10) + 1)),
+      didWin: false,
+      firstButtonOpacity: 1,
+      secondButtonOpacity: 1,
+      thirdButtonOpacity: 1,
+      fourthButtonOpacity: 1,
+    })
+
+    this.componentDidMount();
+
+    console.log("Entered");
+  }
+  
 
   //Added the ability to remove a button's opacity
   render() {
@@ -335,26 +366,33 @@ class Homescreen extends React.Component {
          {/* TO MAKE PRESSABLE DRAGGABLE
             https://www.kirupa.com/html5/drag.htm
         */}
+        {this.state.didWin ? (
+          <SafeAreaView style={Styles.container}>
+            <WinningScreen isVisible={this.state.didWin} onClose={() => this.onModalClose()}></WinningScreen>
+          </SafeAreaView>
+        ) : (
+          <SafeAreaView style={Styles.container}>
+            <View style={Styles.mainGameContainer}> 
+              <GameButton whenClicked={() => this.digitEquivalent(this.state.firstButtonText, this, "first")} viewStyle={{...Styles.buttonContainer,
+                                                                                  opacity: this.state.firstButtonOpacity}} textStyle={Styles.buttonTextStyle} buttonText={this.state.firstButtonText} id="first"> </GameButton>
+              <GameButton whenClicked={() => this.digitEquivalent(this.state.secondButtonText, this, "second")} viewStyle={{...Styles.buttonContainer,
+                                                                                  opacity: this.state.secondButtonOpacity}} textStyle={Styles.buttonTextStyle} buttonText={this.state.secondButtonText} id="second"> </GameButton>
+              <GameButton whenClicked={() => this.digitEquivalent(this.state.thirdButtonText, this, "third")} viewStyle={{...Styles.buttonContainer,
+                                                                                  opacity: this.state.thirdButtonOpacity}} textStyle={Styles.buttonTextStyle} buttonText={this.state.thirdButtonText} id="third"> </GameButton>
+              <GameButton whenClicked={() => this.digitEquivalent(this.state.fourthButtonText, this, "fourth")} viewStyle={{...Styles.buttonContainer,
+                                                                                 opacity: this.state.fourthButtonOpacity}} textStyle={Styles.buttonTextStyle} buttonText={this.state.fourthButtonText} id="fourth"> </GameButton>
+            </View>
   
-        <View style={Styles.mainGameContainer}> 
-          
-          <GameButton whenClicked={() => this.digitEquivalent(this.state.firstButtonText, this, "first")} viewStyle={{...Styles.buttonContainer,
-                                                                              opacity: this.state.firstButtonOpacity}} textStyle={Styles.buttonTextStyle} buttonText={this.state.firstButtonText} id="first"> </GameButton>
-          <GameButton whenClicked={() => this.digitEquivalent(this.state.secondButtonText, this, "second")} viewStyle={{...Styles.buttonContainer,
-                                                                              opacity: this.state.secondButtonOpacity}} textStyle={Styles.buttonTextStyle} buttonText={this.state.secondButtonText} id="second"> </GameButton>
-          <GameButton whenClicked={() => this.digitEquivalent(this.state.thirdButtonText, this, "third")} viewStyle={{...Styles.buttonContainer,
-                                                                              opacity: this.state.thirdButtonOpacity}} textStyle={Styles.buttonTextStyle} buttonText={this.state.thirdButtonText} id="third"> </GameButton>
-          <GameButton whenClicked={() => this.digitEquivalent(this.state.fourthButtonText, this, "fourth")} viewStyle={{...Styles.buttonContainer,
-                                                                              opacity: this.state.fourthButtonOpacity}} textStyle={Styles.buttonTextStyle} buttonText={this.state.fourthButtonText} id="fourth"> </GameButton>
-        </View>
-  
-        <View style={Styles.operandButtonContainer}>
-          <OperandButton whenClicked={() => this.operandf("+")} viewStyle={Styles.operandButtons} id={ACTIONABLE_ITEMS.ADD_DIGIT} textStyle={Styles.buttonTextStyle} buttonText={"+"} />
-          <OperandButton whenClicked={() => this.operandf("-")} viewStyle={Styles.operandButtons} id={ACTIONABLE_ITEMS.SUBTRACT_DIGIT} textStyle={Styles.buttonTextStyle} buttonText={"-"} />
-          <OperandButton whenClicked={() => this.operandf("/")} viewStyle={Styles.operandButtons} id={ACTIONABLE_ITEMS.DIVIDE_DIGIT} textStyle={Styles.buttonTextStyle} buttonText={"/"} />
-          <OperandButton whenClicked={() => this.operandf("*")} viewStyle={Styles.operandButtons} id={ACTIONABLE_ITEMS.MULTIPLY_DIGIT} textStyle={Styles.buttonTextStyle} buttonText={"X"} />
-          <OperandButton whenClicked={() => this.resetOpacity()} viewStyle={Styles.operandButtons} id={ACTIONABLE_ITEMS.MULTIPLY_DIGIT} textStyle={Styles.buttonTextStyle} buttonText={"Back"} />
-        </View>
+          <View style={Styles.operandButtonContainer}>
+            <OperandButton whenClicked={() => this.operandf("+")} viewStyle={Styles.operandButtons} id={ACTIONABLE_ITEMS.ADD_DIGIT} textStyle={Styles.buttonTextStyle} buttonText={"+"} />
+            <OperandButton whenClicked={() => this.operandf("-")} viewStyle={Styles.operandButtons} id={ACTIONABLE_ITEMS.SUBTRACT_DIGIT} textStyle={Styles.buttonTextStyle} buttonText={"-"} />
+            <OperandButton whenClicked={() => this.operandf("/")} viewStyle={Styles.operandButtons} id={ACTIONABLE_ITEMS.DIVIDE_DIGIT} textStyle={Styles.buttonTextStyle} buttonText={"/"} />
+            <OperandButton whenClicked={() => this.operandf("*")} viewStyle={Styles.operandButtons} id={ACTIONABLE_ITEMS.MULTIPLY_DIGIT} textStyle={Styles.buttonTextStyle} buttonText={"X"} />
+            <IconButton whenClicked={() => this.goBack()} viewStyle={Styles.operandButtons} id={ACTIONABLE_ITEMS.MULTIPLY_DIGIT} icon={"arrow-left-thick"} />
+          </View>
+          </SafeAreaView>
+        )}
+        
   
         {/* </Text> */}
       </SafeAreaView>
@@ -398,7 +436,7 @@ const Styles = StyleSheet.create({
     flexDirection: "row",
     borderColor: "white",
     borderRadius: 20,
-    justifyContent: "space-around",
+    justifyContent: "center",
     alignContent: "space-around",
     flexWrap: "wrap",
   },

@@ -1,9 +1,8 @@
 import { Text } from 'react-native'
-import { operandf } from './Homescreen'
 import Pressable from './Pressable'
 import React from 'react'
 
-export default class GameButton extends React.Component {
+export default class OperandButton extends React.Component {
     constructor(props){
         super(props)
     }

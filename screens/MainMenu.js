@@ -3,13 +3,14 @@ import { View, Text } from "react-native";
 import { StyleSheet } from "react-native";
 import { Pressable } from "react-native";
 import React from "react";
+import { Button } from "react-native-paper";
 
 const MainMenu = ({ navigation }) => {
     return(
     <SafeAreaView style={Styles.container}>
         <View style={Styles.mainGameContainer}>
             <Pressable style={Styles.buttonContainer} onPress={() => navigation.navigate("24 GAME")}>
-                <Text style={Styles.buttonTextStyle}> CLICK ME </Text>
+                <Button labelStyle={{color: "white", fontSize: 90, textAlign:"center"}} icon="play"></Button>
             </Pressable>
         </View>
     </SafeAreaView>
@@ -42,7 +43,8 @@ const Styles = StyleSheet.create({
         alignContent: "center",
         justifyContent: "center",
         backgroundColor: "#483d8b",
-        tintColor: "black"
+        tintColor: "black",
+        borderRadius: 20,
     },
     buttonTextStyle: {
         fontSize: 25,
