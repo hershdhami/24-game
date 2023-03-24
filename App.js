@@ -7,6 +7,8 @@ const Stack = createNativeStackNavigator();
 
 import React from 'react';
 import MainMenu from './screens/MainMenu';
+import Leaderboard from './screens/Leaderboard';
+import Account from './screens/Account';
 
 class App extends React.Component {
   render() {
@@ -15,6 +17,8 @@ class App extends React.Component {
         <TailwindProvider>
           <Stack.Navigator initialRouteName='MainMenu'>
           <Stack.Screen name = "MainMenu" options={{headerShown: false}} component={MainMenu} />
+          <Stack.Screen name = "Leaderboard" component={Leaderboard} />
+          <Stack.Screen name = "Account" component={Account} />
           <Stack.Screen name ="24 GAME" 
                           options={{headerStyle: { backgroundColor: '#483d8b', },
                                     headerTintColor: '#fff',

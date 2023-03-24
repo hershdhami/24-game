@@ -13,10 +13,10 @@ const MainMenu = ({ navigation }) => {
                 <Button labelStyle={{color: "white", fontSize: 90, textAlign:"center"}} icon="play"></Button>
             </Pressable>
             <View style={Styles.accessoryButtonContainer}>
-                <Pressable style={Styles.smallButtonContainer}>
+                <Pressable style={Styles.smallButtonContainer} onPress={() => navigation.navigate("Leaderboard")}>
                     <Button labelStyle={{color: "white", fontSize: 30, textAlign:"center"}} icon="table-large"></Button>
                 </Pressable>
-                <Pressable style={Styles.smallButtonContainer}>
+                <Pressable style={Styles.smallButtonContainer} onPress={() => navigation.navigate("Account")}>
                     <Button labelStyle={{color: "white", fontSize: 30, textAlign:"center"}} icon="account"></Button>
                 </Pressable>
                 <Pressable style={Styles.smallButtonContainer}>
