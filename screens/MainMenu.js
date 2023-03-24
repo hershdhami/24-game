@@ -12,6 +12,17 @@ const MainMenu = ({ navigation }) => {
             <Pressable style={Styles.buttonContainer} onPress={() => navigation.navigate("24 GAME")}>
                 <Button labelStyle={{color: "white", fontSize: 90, textAlign:"center"}} icon="play"></Button>
             </Pressable>
+            <View style={Styles.accessoryButtonContainer}>
+                <Pressable style={Styles.smallButtonContainer}>
+                    <Button labelStyle={{color: "white", fontSize: 30, textAlign:"center"}} icon="table-large"></Button>
+                </Pressable>
+                <Pressable style={Styles.smallButtonContainer}>
+                    <Button labelStyle={{color: "white", fontSize: 30, textAlign:"center"}} icon="account"></Button>
+                </Pressable>
+                <Pressable style={Styles.smallButtonContainer}>
+                    <Button labelStyle={{color: "white", fontSize: 30, textAlign:"center"}} icon="headphones-settings"></Button>
+                </Pressable>
+            </View>
         </View>
     </SafeAreaView>
     )
@@ -23,28 +34,46 @@ const Styles = StyleSheet.create({
     container: {
       backgroundColor: "#d3d3d3",
       height: "100%",
-      alignItems: "center"
+      alignItems: "center",
     },
     mainGameContainer: {
       height: "25%",
-      top: "55%",
-      width: "60%",
+      top: "40%",
+      width: "75%",
       backgroundColor: "#d3d3d3",
       display: "flex",
-      flexDirection: "row",
-      borderColor: "white",
-      justifyContent: "space-around",
-      alignContent: "space-around",
-      flexWrap: "wrap",
+      flexDirection: "column",
+      borderColor: "white"
     },
     buttonContainer: {
-        width: "45%",
+        width: "40%",
         height: "45%",
-        alignContent: "center",
-        justifyContent: "center",
         backgroundColor: "#483d8b",
         tintColor: "black",
         borderRadius: 20,
+        borderWidth: 4,
+        borderColor: "black",
+        alignSelf: "center"
+    },
+    accessoryButtonContainer: {
+        height: "100%",
+        top: "60%",
+        width: "100%",
+        display: "flex",
+        flexDirection: "row",
+        borderColor: "white",
+        justifyContent: "space-between",
+        flexWrap: "wrap"
+    },
+    smallButtonContainer: {
+        width: "22%",
+        height: "30%",
+        backgroundColor: "#483d8b",
+        tintColor: "black",
+        borderRadius: 20,
+        borderWidth: 4,
+        borderColor: "black",
+        alignItems: "center"
     },
     buttonTextStyle: {
         fontSize: 25,

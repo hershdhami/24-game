@@ -371,7 +371,7 @@ class Homescreen extends React.Component {
             <WinningScreen isVisible={this.state.didWin} onClose={() => this.onModalClose()}></WinningScreen>
           </SafeAreaView>
         ) : (
-          <SafeAreaView style={Styles.container}>
+          <View style={Styles.container}>
             <View style={Styles.mainGameContainer}> 
               <GameButton whenClicked={() => this.digitEquivalent(this.state.firstButtonText, this, "first")} viewStyle={{...Styles.buttonContainer,
                                                                                   opacity: this.state.firstButtonOpacity}} textStyle={Styles.buttonTextStyle} buttonText={this.state.firstButtonText} id="first"> </GameButton>
@@ -390,7 +390,7 @@ class Homescreen extends React.Component {
             <OperandButton whenClicked={() => this.operandf("*")} viewStyle={Styles.operandButtons} id={ACTIONABLE_ITEMS.MULTIPLY_DIGIT} textStyle={Styles.buttonTextStyle} buttonText={"X"} />
             <IconButton whenClicked={() => this.goBack()} viewStyle={Styles.operandButtons} id={ACTIONABLE_ITEMS.MULTIPLY_DIGIT} icon={"arrow-left-thick"} />
           </View>
-          </SafeAreaView>
+          </View>
         )}
         
   
@@ -405,6 +405,7 @@ const Styles = StyleSheet.create({
   container: {
     backgroundColor: "#d3d3d3",
     height: "100%",
+    width: "100%",
     alignItems: "center"
   },
   mainGameContainer: {
@@ -425,7 +426,9 @@ const Styles = StyleSheet.create({
     alignContent: "center",
     justifyContent: "center",
     backgroundColor: "#483d8b",
-    tintColor: "black"
+    tintColor: "black",
+    borderWidth: 2,
+    borderColor: "black",
   },
   operandButtonContainer: {
     height: "10%",
@@ -439,14 +442,18 @@ const Styles = StyleSheet.create({
     justifyContent: "center",
     alignContent: "space-around",
     flexWrap: "wrap",
+    padding: 5,
   },
   operandButtons: {
-    width: "24%",
+    width: "22%",
     height: "50%",
     alignContent: "center",
     justifyContent: "center",
     backgroundColor: "#483d8b",
-    tintColor: "black"
+    tintColor: "black",
+    borderWidth: 2,
+    borderColor: "black",
+    margin: 5,
   },
   buttonTextStyle: {
     fontSize: 25,
