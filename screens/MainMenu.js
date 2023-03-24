@@ -37,8 +37,8 @@ const Styles = StyleSheet.create({
       alignItems: "center",
     },
     mainGameContainer: {
-      height: "25%",
-      top: "40%",
+      height: "30%",
+      top: "30%",
       width: "75%",
       backgroundColor: "#d3d3d3",
       display: "flex",
@@ -57,7 +57,7 @@ const Styles = StyleSheet.create({
     },
     accessoryButtonContainer: {
         height: "100%",
-        top: "60%",
+        top: "70%",
         width: "100%",
         display: "flex",
         flexDirection: "row",

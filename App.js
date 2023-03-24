@@ -16,9 +16,27 @@ class App extends React.Component {
       <NavigationContainer>
         <TailwindProvider>
           <Stack.Navigator initialRouteName='MainMenu'>
-          <Stack.Screen name = "MainMenu" options={{headerShown: false}} component={MainMenu} />
-          <Stack.Screen name = "Leaderboard" component={Leaderboard} />
-          <Stack.Screen name = "Account" component={Account} />
+          <Stack.Screen name = "MainMenu"  options={{headerStyle: { backgroundColor: '#483d8b', },
+                                    headerTintColor: '#fff',
+                                    headerTitleStyle: {
+                                      fontWeight: 'bold',
+                                      fontSize: 25
+                                    },
+                                    headerTitleAlign: 'center'}}  component={MainMenu} />
+          <Stack.Screen name = "Leaderboard" options={{headerStyle: { backgroundColor: '#483d8b', },
+                                    headerTintColor: '#fff',
+                                    headerTitleStyle: {
+                                      fontWeight: 'bold',
+                                      fontSize: 25
+                                    },
+                                    headerTitleAlign: 'center'}} component={Leaderboard} />
+          <Stack.Screen name = "Account" options={{headerStyle: { backgroundColor: '#483d8b', },
+                                    headerTintColor: '#fff',
+                                    headerTitleStyle: {
+                                      fontWeight: 'bold',
+                                      fontSize: 25
+                                    },
+                                    headerTitleAlign: 'center'}} component={Account} />
           <Stack.Screen name ="24 GAME" 
                           options={{headerStyle: { backgroundColor: '#483d8b', },
                                     headerTintColor: '#fff',
